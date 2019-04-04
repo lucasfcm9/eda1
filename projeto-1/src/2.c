@@ -3,8 +3,8 @@
 #define SIZE 10
 
 void print(double *NOTAS, int size);
-int *recebe_notas(double *NOTAS, int size);
-int *conta_notas(int *apr, int size, int *approved, int *reproved);
+int *recebe_notas(double *NOTAS, int size, int *APR);
+void conta_notas(int *apr, int size, int *approved, int *reproved);
 int percent_aprov(int *approved, int *reproved, double *percent_approved, double *percent_reproved);
 
 int main()
@@ -12,6 +12,7 @@ int main()
 
     int i;
     double NOTAS[SIZE];
+    int APR[SIZE];
 
     printf("Digite a nota dos 10 alunos: \n");
 
@@ -23,7 +24,7 @@ int main()
     print(NOTAS, SIZE);
 
     int *x;
-    x = recebe_notas(NOTAS, SIZE);
+    x = recebe_notas(NOTAS, SIZE, APR);
 
     for (i = 0; i < SIZE; i++)
     {
@@ -32,7 +33,7 @@ int main()
 
     int approved = 0, reproved = 0;
     int *c;
-    c = conta_notas(x, SIZE, &approved, &reproved);
+    conta_notas(x, SIZE, &approved, &reproved);
 
     printf("Quantidade de alunos aprovados: %d\n", approved);
     printf("Quantidade de alunos reprovados: %d\n", reproved);
@@ -67,23 +68,22 @@ void print(double *NOTAS, int size)
     }
 }
 
-int *recebe_notas(double *NOTAS, int size)
+int *recebe_notas(double *NOTAS, int size, int *APR)
 {
 
     int i;
-    static int apr[SIZE];
 
     for (i = 0; i < size; i++)
     {
         if (NOTAS[i] >= 6.0)
-            apr[i] = 1;
+            APR[i] = 1;
         else
-            apr[i] = 0;
+            APR[i] = 0;
     }
-    return apr;
+    return APR;
 }
 
-int *conta_notas(int *apr, int size, int *approved, int *reproved)
+void conta_notas(int *apr, int size, int *approved, int *reproved)
 {
 
     int i;
@@ -94,8 +94,6 @@ int *conta_notas(int *apr, int size, int *approved, int *reproved)
         else
             (*reproved)++;
     }
-    return approved;
-    return reproved;
 }
 
 int percent_aprov(int *approved, int *reproved, double *percent_approved, double *percent_reproved)
