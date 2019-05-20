@@ -16,6 +16,7 @@ typedef struct SCHEDULE
 } Agenda;
 
 Agenda *head = NULL;
+Agenda *tail;
 
 Agenda *CreateSchedule()
 {
@@ -61,11 +62,15 @@ Agenda *CreateSchedule()
 //     return new_contact;
 // }
 
-void Insert()
+void InsertContactInArchive()
 {
     Agenda *new_contact;
     new_contact = (Agenda *)malloc(sizeof(Agenda));
 
+    // FILE *fp;
+    // fp = fopen("Contacts.txt", "a");
+
+    getchar();
     printf("Insira seu nome:\n");
     scanf("%[^\n]", new_contact->name);
     getchar();
@@ -95,6 +100,28 @@ void Insert()
         head->prev = new_contact;
 
     head = new_contact;
+    free(new_contact);
+}
+
+Agenda *DeleteFirst()
+{
+    // FILE *fp;
+    // fp = fopen("Contacts.txt", "r");
+
+    Agenda *delete_contact = head;
+
+    if(head->next == NULL)
+    {
+        tail = NULL;
+    }
+    else
+    {
+        head->next->prev = NULL;
+    }
+
+    head = head->next;
+
+    return delete_contact;
 }
 
 void ShowContacts()
@@ -121,7 +148,7 @@ void RegisterContact()
 
     if(new_contact == NULL)
         printf("4ERROR!\n");
-        
+
     printf("Insira seu nome:\n");
     scanf("%[^\n]", new_contact->name);
     getchar();
@@ -147,8 +174,8 @@ void RegisterContact()
     FILE *file;
     file = fopen("Contacts.txt", "a");
     fprintf(file, "%s\n%s\n%s\n%lu\n%s\n", new_contact->name, new_contact->phone,
-                                               new_contact->adress, new_contact->cep,
-                                               new_contact->date_of_birth);
+                                           new_contact->adress, new_contact->cep,
+                                           new_contact->date_of_birth);
     fclose(file);
 
 }
