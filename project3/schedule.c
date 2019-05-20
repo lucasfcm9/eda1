@@ -1,37 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+
 #include "schedule.h"
 
 int main()
 {
     Agenda *new_contact;
-    new_contact = CreateSchedule();
 
     int option;
-    while(option != 4)
-    {
-        printf("CADASTRO DE USUÁRIO EM UMA AGENDA\n\n");
-        printf("1 - Inserir contato no ínicio da lista\n");
-        printf("2 - Remover contato\n");
-        printf("3 - Listar todos os contatos");
-        printf("Digite uma opção:\n\n");
-        scanf("%d", &option);
+    do {
+        printf("1 - Inserir contato no ínicio da Agenda\n");
+        printf("2 - Inserir contato no final da Agenda\n");
+        printf("3 - Mostrar todos os contatos da Agenda\n");
+        printf("Digite sua opção: ");
+        scanf("%d%*c", &option);
 
-        switch(option)
-        {
+        switch(option) {
             case 1:
-                InsertContactInArchive();
+                insertContactAtHead();
                 break;
             case 2:
-                new_contact = DeleteFirst();
+                insertContactAtTail();
                 break;
             case 3:
                 ShowContacts();
-                break;
-            case 4:
-                exit(-1);
+            default:
+                printf("Digite uma opção válida\n");
         }
-    }
+    } while(option);
+
     return 0;
 }

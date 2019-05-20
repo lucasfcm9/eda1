@@ -1,8 +1,6 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
-#include <string.h>
-
 typedef struct SCHEDULE
 {
     char name[101];
@@ -16,112 +14,142 @@ typedef struct SCHEDULE
 } Agenda;
 
 Agenda *head = NULL;
-Agenda *tail;
+Agenda *tail = NULL;
+Agenda *current = NULL;
 
-Agenda *CreateSchedule()
+bool isEmpty()
 {
-    return NULL;
+    return head == NULL;
 }
 
-// Agenda *CreateContact()
+int length() //Função que verifica o tamanho da lista duplamente encadeada;
+{
+    int size = 0;
+    Agenda *current;
+
+    for(current = head; current != NULL; current = current->next)
+    {
+        size++;
+    }
+    return size;
+}
+
+// Agenda *createContact()
 // {
-//     Agenda *new_contact; //Criando um novo contato pra Agenda;
-//     new_contact = (Agenda *)malloc(sizeof(Agenda)); //Alocando memória para criar um contato;
+//     Agenda *new_contact;
+//     new_contact = (Agenda *)malloc(sizeof(Agenda));
+//
+//     int length = 0;
 //
 //     if(new_contact == NULL)
-//         printf("Erro de alocação\n\n");
+//     {
+//         printf("Cannot allocate memory\n");
+//     }
 //
-//     printf("Informe o nome completo:\n");
+//     printf("Informe seu nome: ");
 //     scanf("%[^\n]", new_contact->name);
 //     getchar();
 //
-//     printf("Informe seu número de telefone, nesse estilo, (XXXX-XXXX):\n");
+//     printf("Informe seu número de telefone: ");
 //     scanf("%[^\n]", new_contact->phone);
 //     getchar();
 //
-//     printf("Informe seu endereço:\n");
+//     printf("Informe seu endereço: ");
 //     scanf("%[^\n]", new_contact->adress);
 //     getchar();
 //
 //     unsigned long int aux = 0;
-//     printf("Informa seu CEP:\n");
+//     printf("Informe seu CEP: ");
 //     scanf("%lu", &aux);
 //     new_contact->cep = (unsigned long int) aux;
 //     getchar();
 //
-//     printf("Informe sua data de nascimento, nesse estilo, (XX/XX/XX):\n");
-//     scanf("%s", new_contact->date_of_birth);
+//     printf("Informe sua data de nascimento: ");
+//     scanf("%[^\n]", new_contact->date_of_birth);
 //
+//     // strcpy(new_contact->name, name);
+//     // strcpy(new_contact->phone, phone);
+//     // strcpy(new_contact->adress, adress);
+//     // new_contact->cep = cep;
+//     // strcpy(new_contact->date_of_birth, date_of_birth);
 //
-//     printf("%s\n", new_contact->name);
-//     printf("%s\n", new_contact->phone);
-//     printf("%s\n", new_contact->adress);
-//     printf("%lu\n", new_contact->cep);
-//     printf("%s\n", new_contact->date_of_birth);
+//     printf("Nome: %s\n", new_contact->name);
+//     printf("Phone: %s\n", new_contact->phone);
+//     printf("Endereço: %s\n", new_contact->adress);
+//     printf("CEP: %lu\n", new_contact->cep);
+//     printf("Data de nascimento: %s\n", new_contact->date_of_birth);
 //
 //     return new_contact;
 // }
 
-void InsertContactInArchive()
+
+void insertContactAtHead()
 {
     Agenda *new_contact;
     new_contact = (Agenda *)malloc(sizeof(Agenda));
 
-    // FILE *fp;
-    // fp = fopen("Contacts.txt", "a");
+    isEmpty() ? (tail = new_contact) : (head->prev = new_contact);
 
-    getchar();
-    printf("Insira seu nome:\n");
+    printf("Insira seu nome: ");
     scanf("%[^\n]", new_contact->name);
     getchar();
 
-    printf("Insira seu número de telefone nesse formato, por favor -> XXXX-XXXX:\n");
+    printf("Insira seu número de telefone: ");
     scanf("%[^\n]", new_contact->phone);
     getchar();
 
-    printf("Insira seu endereço:\n");
+    printf("Insira seu endereço: ");
     scanf("%[^\n]", new_contact->adress);
     getchar();
 
     unsigned long int aux = 0;
-    printf("Insira seu CEP:\n");
+    printf("Insira seu CEP: ");
     scanf("%lu", &aux);
     new_contact->cep = (unsigned long int) aux;
     getchar();
 
-    printf("Insira sua data de nascimento nesse formato, por favor -> XX/XX/XX:\n");
-    scanf("%[^\n]", new_contact->date_of_birth);
-    getchar();
+    printf("Insira sua data de nascimento: ");
+    scanf("%[^\n]%*c", new_contact->date_of_birth);
 
-    new_contact->prev = NULL;
     new_contact->next = head;
-
-    if(head != NULL)
-        head->prev = new_contact;
-
     head = new_contact;
-    free(new_contact);
 }
 
-Agenda *DeleteFirst()
+void insertContactAtTail()
 {
-    // FILE *fp;
-    // fp = fopen("Contacts.txt", "r");
+    Agenda *new_contact;
+    new_contact = (Agenda *)malloc(sizeof(Agenda));
 
-    Agenda *delete_contact = head;
-
-    if(head->next == NULL)
-    {
-        tail = NULL;
-    }
+    if(isEmpty())
+        tail = new_contact;
     else
     {
-        head->next->prev = NULL;
+        tail->next = new_contact;
+        new_contact->prev = tail;
     }
 
-    head = head->next;
+    printf("Insira seu nome: ");
+    scanf("%[^\n]", new_contact->name);
+    getchar();
 
-    return delete_contact;
+    printf("Insira seu número de telefone: ");
+    scanf("%[^\n]", new_contact->phone);
+    getchar();
+
+    printf("Insira seu endereço: ");
+    scanf("%[^\n]", new_contact->adress);
+    getchar();
+
+    unsigned long int aux = 0;
+    printf("Insira seu CEP: ");
+    scanf("%lu", &aux);
+    new_contact->cep = (unsigned long int) aux;
+    getchar();
+
+    printf("Insira sua data de nascimento: ");
+    scanf("%[^\n]%*c", new_contact->date_of_birth);
+
+    tail = new_contact;
 }
 
 void ShowContacts()
@@ -139,45 +167,6 @@ void ShowContacts()
         printf("$\n");
         node = node->next;
     }
-}
-
-void RegisterContact()
-{
-    Agenda *new_contact;
-    new_contact = (Agenda *)malloc(sizeof(Agenda));
-
-    if(new_contact == NULL)
-        printf("4ERROR!\n");
-
-    printf("Insira seu nome:\n");
-    scanf("%[^\n]", new_contact->name);
-    getchar();
-
-    printf("Insira seu número de telefone nesse formato, por favor -> XXXX-XXXX:\n");
-    scanf("%[^\n]", new_contact->phone);
-    getchar();
-
-    printf("Insira seu endereço:\n");
-    scanf("%[^\n]", new_contact->adress);
-    getchar();
-
-    unsigned long int aux = 0;
-    printf("Insira seu CEP:\n");
-    scanf("%lu", &aux);
-    new_contact->cep = (unsigned long int) aux;
-    getchar();
-
-    printf("Insira sua data de nascimento nesse formato, por favor -> XX/XX/XX:\n");
-    scanf("%[^\n]", new_contact->date_of_birth);
-    getchar();
-
-    FILE *file;
-    file = fopen("Contacts.txt", "a");
-    fprintf(file, "%s\n%s\n%s\n%lu\n%s\n", new_contact->name, new_contact->phone,
-                                           new_contact->adress, new_contact->cep,
-                                           new_contact->date_of_birth);
-    fclose(file);
-
 }
 
 #endif
