@@ -15,8 +15,11 @@ typedef struct SCHEDULE
 
 } DataType;
 
-DataType *newContact(char *, char *, char *, unsigned int, char *);
+DataType *newContact(char *, char *, char *, unsigned int, char *, DataType*);
 DataType *create();
+void imprime(DataType *);
+void free_list(DataType *);
+DataType *newRegister(DataType*);
 
 int main()
 {
@@ -52,7 +55,7 @@ int main()
                 strcpy(adress, value);
                 break;
             case 3:
-                cep = (unsigned int)value;
+                cep = strtoul(value, NULL, 10);
                 break;
             case 4:
                 strcpy(date_of_birth, value);
@@ -61,11 +64,14 @@ int main()
         count++;
         if(value[0] == '$')
         {
-            list = newContact(name, phone, adress, cep, date_of_birth);
+            list = newContact(name, phone, adress, cep, date_of_birth, list);
             count = 0;
         }
     }
     fclose(fp);
+    list = newRegister(list);
+    imprime(list);
+    free_list(list);
     return 0;
 }
 
@@ -76,72 +82,111 @@ DataType *create()
 
 DataType *newContact(char *name, char *phone, char *adress, unsigned int cep, char *date_of_birth, DataType *list)
 {
-    printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
-    printf("%s\n%s\n%s\n%u\n%s\n", name, phone, adress, cep, date_of_birth);
-    printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+    // printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+    // printf("%s\n%s\n%s\n%u\n%s\n", name, phone, adress, cep, date_of_birth);
+    // printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
     DataType *contact;
     contact = (DataType *)malloc(sizeof(DataType));
 
-    if(list == NULL)
-    {
-        printf("\nCannot allocate memory\n");
-    }
 
     if(contact == NULL)
     {
         printf("\nCannot allocate memory\n");
     }
+    strcpy(contact->name, name);
+    strcpy(contact->phone, phone);
+    strcpy(contact->adress, adress);
+    strcpy(contact->date_of_birth, date_of_birth);
+    contact->cep = cep;
 
+    if(list == NULL)
+    {
+        contact->next = NULL;
+        contact->prev = NULL;
+        return contact;
 
+    }
+    DataType *current;
+    for(current = list; current != NULL; current = current->next){
+        if(current->next == NULL){
+            current->next = contact;
+            contact->next = NULL;
+            contact->prev = current;
+        }
+    }
+    return list;
+}
 
-    // printf("Enter your name: ");
-    // scanf("%[^\n]%*c", contact->name);
-    //
-    // bool check_phone = false;
-    //
-    // //XXXXX[-]XXXX
-    // do
-    // {
-    //     printf("Enter your phone number -> [XXXXX-XXXX]: ");
-    //     scanf("%[^\n]%*c", contact->phone);
-    //
-    //     if(contact->phone[5] != '-')
-    //     {
-    //         printf("Error, type again\n");
-    //         check_phone = true;
-    //     }
-    //     else{
-    //         check_phone = false;
-    //     }
-    // } while(check_phone);
-    //
-    // printf("Enter your adress: ");
-    // scanf("%[^\n]%*c", contact->adress);
-    //
-    // unsigned int tmp;
-    //
-    // printf("Enter your CEP: ");
-    // scanf("%u%*c", &tmp);
-    // contact->cep = (unsigned int) tmp;
-    //
-    // bool check_date = false;
-    //
-    // do
-    // {
-    //     printf("Enter your date of birth -> [XX/XX/XXXX]: ");
-    //     scanf("%[^\n]%*c", contact->date_of_birth);
-    //     // 26[/]11[/]1996
-    //     if(contact->date_of_birth[2] != '/' || contact->date_of_birth[5] != '/')
-    //     {
-    //         printf("Error, type again\n");
-    //         check_date = true;
-    //     }
-    //     else
-    //     {
-    //         check_date = false;
-    //     }
-    // } while(check_date);
+void imprime(DataType *list){
+    DataType *elem;
+    for(elem = list; elem != NULL; elem = elem->next){
+        printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+        printf("%s\n%s\n%s\n%u\n%s\n", elem->name, elem->phone, elem->adress, elem->cep, elem->date_of_birth);
+        printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+    }
+}
 
+DataType *newRegister(DataType *list){
+    char name[101];
+    char phone[101];
+    char adress[101];
+    unsigned int cep;
+    char date_of_birth[101];
 
-    return contact;
+    printf("Enter your name: ");
+    scanf("%[^\n]%*c", name);
+
+    bool check_phone = false;
+
+    //XXXXX[-]XXXX
+    do
+    {
+        printf("Enter your phone number -> [XXXXX-XXXX]: ");
+        scanf("%[^\n]%*c", phone);
+
+        if(phone[5] != '-')
+        {
+            printf("Error, type again\n");
+            check_phone = true;
+        }
+        else{
+            check_phone = false;
+        }
+    } while(check_phone);
+
+    printf("Enter your adress: ");
+    scanf("%[^\n]%*c", adress);
+
+    unsigned int tmp;
+
+    printf("Enter your CEP: ");
+    scanf("%u%*c", &tmp);
+    cep = (unsigned int) tmp;
+
+    bool check_date = false;
+
+    do
+    {
+        printf("Enter your date of birth -> [XX/XX/XXXX]: ");
+        scanf("%[^\n]%*c", date_of_birth);
+        // 26[/]11[/]1996
+        if(date_of_birth[2] != '/' || date_of_birth[5] != '/')
+        {
+            printf("Error, type again\n");
+            check_date = true;
+        }
+        else
+        {
+            check_date = false;
+        }
+    } while(check_date);
+    return newContact(name, phone, adress, cep, date_of_birth, list);
+}
+
+void free_list(DataType *list){
+    DataType *elem;
+    for(elem = list; elem != NULL; list = elem){
+        elem = elem->next;
+        free(list);
+    }
 }
