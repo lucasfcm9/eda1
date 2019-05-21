@@ -7,29 +7,34 @@
 
 int main()
 {
-    Agenda *new_contact;
-
     int option;
-    do {
-        printf("1 - Inserir contato no ínicio da Agenda\n");
-        printf("2 - Inserir contato no final da Agenda\n");
-        printf("3 - Mostrar todos os contatos da Agenda\n");
-        printf("Digite sua opção: ");
-        scanf("%d%*c", &option);
 
-        switch(option) {
+    do {
+        printf("1 - Inserir novo registro\n");
+        printf("2 - Remover registros que contenham certa string no nome\n");
+        printf("3 - Visualizar registros que contenham certa string no nome\n");
+        printf("4 - Visualizar todos os registros em ordem alfabética\n");
+        printf("5 - SAIR\n");
+
+        switch(option)
+        {
             case 1:
-                insertContactAtHead();
+                Inserir();
                 break;
             case 2:
-                insertContactAtTail();
+                Remover();
                 break;
             case 3:
-                ShowContacts();
+                Visualizar();
+                break;
+            case 4:
+                Ordem();
+                break;
             default:
                 printf("Digite uma opção válida\n");
+                break;
         }
     } while(option);
-
+    
     return 0;
 }
