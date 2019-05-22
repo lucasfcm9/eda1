@@ -1,8 +1,8 @@
 /* Alunos: Lucas Fellipe Carvalho Moreira && Pedro Henrique Queiroz Mirando && Gabriel Davi Silva Pereira
    Matrículas: 16/0133394 && 15/0144474 && 170010341
-   Disciplina: Estruturas de Dados 1
-   Professor: Mateus Mendelson
-*/
+Disciplina: Estruturas de Dados 1
+Professor: Mateus Mendelson
+ */
 
 #ifndef FUNCTION_H
 #define FUNCTION_H
@@ -319,8 +319,8 @@ double *GLCM(int *matrix)
 	array_pixel_below_diag_right = (int *)calloc(256 * 256, sizeof(int));
 
 	if (array_pixel_above == NULL || array_pixel_below == NULL || array_pixel_right == NULL || array_pixel_left == NULL ||
-		array_pixel_above_diag_right == NULL || array_pixel_above_diag_left == NULL || array_pixel_below_diag_left == NULL ||
-		array_pixel_above_diag_right == NULL)
+			array_pixel_above_diag_right == NULL || array_pixel_above_diag_left == NULL || array_pixel_below_diag_left == NULL ||
+			array_pixel_above_diag_right == NULL)
 	{
 		printf("Falha na alocação de memória!\n");
 		exit(-1);
@@ -383,8 +383,8 @@ double *GLCM(int *matrix)
 	}
 
 	features = features_generator(array_pixel_above, array_pixel_below, array_pixel_right, array_pixel_left,
-								  array_pixel_above_diag_right, array_pixel_above_diag_left, array_pixel_below_diag_left,
-								  array_pixel_below_diag_right);
+			array_pixel_above_diag_right, array_pixel_above_diag_left, array_pixel_below_diag_left,
+			array_pixel_below_diag_right);
 	free(array_pixel_above);
 	free(array_pixel_below);
 	free(array_pixel_right);
@@ -482,10 +482,10 @@ double *normalized_average(double *vector)
 double *final_result_training(char f, int *random_numbers)
 {
 	char txt[][50] = {"01.txt", "02.txt", "03.txt", "04.txt", "05.txt", "06.txt", "07.txt", "08.txt", "09.txt", "10.txt", "11.txt",
-					  "12.txt", "13.txt", "14.txt", "15.txt", "16.txt", "17.txt", "18.txt", "19.txt", "20.txt", "21.txt", "22.txt",
-					  "23.txt", "24.txt", "25.txt", "26.txt", "27.txt", "28.txt", "29.txt", "30.txt", "31.txt", "32.txt", "33.txt",
-					  "34.txt", "35.txt", "36.txt", "37.txt", "38.txt", "39.txt", "40.txt", "41.txt", "42.txt", "43.txt", "44.txt",
-					  "45.txt", "46.txt", "47.txt", "48.txt", "49.txt", "50.txt"};
+		"12.txt", "13.txt", "14.txt", "15.txt", "16.txt", "17.txt", "18.txt", "19.txt", "20.txt", "21.txt", "22.txt",
+		"23.txt", "24.txt", "25.txt", "26.txt", "27.txt", "28.txt", "29.txt", "30.txt", "31.txt", "32.txt", "33.txt",
+		"34.txt", "35.txt", "36.txt", "37.txt", "38.txt", "39.txt", "40.txt", "41.txt", "42.txt", "43.txt", "44.txt",
+		"45.txt", "46.txt", "47.txt", "48.txt", "49.txt", "50.txt"};
 
 	int count = 0;
 	int *matrix;
@@ -507,7 +507,7 @@ double *final_result_training(char f, int *random_numbers)
 		if (f == 'a')
 		{
 			strcat(name_asphalt, txt[*(random_numbers + count)]);
-			//printf("%s\n", name_asphalt);
+			printf("%s\n", name_asphalt);
 
 			matrix = readFile(name_asphalt);
 		}
@@ -515,7 +515,7 @@ double *final_result_training(char f, int *random_numbers)
 		if (f == 'g')
 		{
 			strcat(name_grass, txt[*(random_numbers + count)]);
-			//printf("%s\n", name_grass);
+			printf("%s\n", name_grass);
 			matrix = readFile(name_grass);
 		}
 		ILBP_vector = ILBP(matrix, initial_line, limit_line, initial_column, limit_column);
@@ -536,10 +536,10 @@ double *final_result_training(char f, int *random_numbers)
 int dist_euclidiana(int *random_numbers, double *final_grass, double *final_asphalt, int n, char type)
 {
 	char txt[][50] = {"01.txt", "02.txt", "03.txt", "04.txt", "05.txt", "06.txt", "07.txt", "08.txt", "09.txt", "10.txt", "11.txt",
-					  "12.txt", "13.txt", "14.txt", "15.txt", "16.txt", "17.txt", "18.txt", "19.txt", "20.txt", "21.txt", "22.txt",
-					  "23.txt", "24.txt", "25.txt", "26.txt", "27.txt", "28.txt", "29.txt", "30.txt", "31.txt", "32.txt", "33.txt",
-					  "34.txt", "35.txt", "36.txt", "37.txt", "38.txt", "39.txt", "40.txt", "41.txt", "42.txt", "43.txt", "44.txt",
-					  "45.txt", "46.txt", "47.txt", "48.txt", "49.txt", "50.txt"};
+		"12.txt", "13.txt", "14.txt", "15.txt", "16.txt", "17.txt", "18.txt", "19.txt", "20.txt", "21.txt", "22.txt",
+		"23.txt", "24.txt", "25.txt", "26.txt", "27.txt", "28.txt", "29.txt", "30.txt", "31.txt", "32.txt", "33.txt",
+		"34.txt", "35.txt", "36.txt", "37.txt", "38.txt", "39.txt", "40.txt", "41.txt", "42.txt", "43.txt", "44.txt",
+		"45.txt", "46.txt", "47.txt", "48.txt", "49.txt", "50.txt"};
 	int initial_line = 0, limit_line = 2;
 	int initial_column = 0, limit_column = 2;
 	int *ILBP_vector;
@@ -558,14 +558,14 @@ int dist_euclidiana(int *random_numbers, double *final_grass, double *final_asph
 	if (type == 'a')
 	{
 		strcat(name_asphalt, txt[*(random_numbers + n)]);
-		//printf("%s\n", name_asphalt);
+		printf("%s\n", name_asphalt);
 		matrix = readFile(name_asphalt);
 	}
 
 	if (type == 'g')
 	{
 		strcat(name_grass, txt[*(random_numbers + n)]);
-		//printf("%s\n", name_grass);
+		printf("%s\n", name_grass);
 		matrix = readFile(name_grass);
 	}
 
@@ -582,9 +582,9 @@ int dist_euclidiana(int *random_numbers, double *final_grass, double *final_asph
 	root_result_asphalt = sqrt(sum_dist_grass);
 	root_result_grass = sqrt(sum_dist_asphalt);
 
-	//printf("TYPE: %c\n",type);
-	//printf("ASPHALT: %.10lf\n",root_result_asphalt );
-	//printf("GRASS: %.10lf\n",root_result_grass );
+	printf("TYPE: %c\n",type);
+	printf("ASPHALT: %.10lf\n",root_result_asphalt );
+	printf("GRASS: %.10lf\n",root_result_grass );
 
 	if (type == 'a' && root_result_asphalt < root_result_grass)
 	{
