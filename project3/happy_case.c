@@ -20,6 +20,7 @@ DataType *create();
 void imprime(DataType *);
 void free_list(DataType *);
 DataType *newRegister(DataType*);
+DataType *deleteContact(DataType*);
 
 int main()
 {
@@ -69,7 +70,9 @@ int main()
         }
     }
     fclose(fp);
-    list = newRegister(list);
+  //  list = newRegister(list);
+    imprime(list);
+    list  = deleteContact(list);
     imprime(list);
     free_list(list);
     return 0;
@@ -82,9 +85,6 @@ DataType *create()
 
 DataType *newContact(char *name, char *phone, char *adress, unsigned int cep, char *date_of_birth, DataType *list)
 {
-    // printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
-    // printf("%s\n%s\n%s\n%u\n%s\n", name, phone, adress, cep, date_of_birth);
-    // printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
     DataType *contact;
     contact = (DataType *)malloc(sizeof(DataType));
 
@@ -189,4 +189,23 @@ void free_list(DataType *list){
     elem = elem->next;
     free(list);
   }
+}
+
+DataType *deleteContact(DataType* list){
+  char subStrig[100];
+  printf(" Type in the name of the substring: \n");
+  scanf("%[^\n]%*c", subStrig);
+
+  DataType *elem;
+  DataType *aux;
+  for(elem = list; elem != NULL; elem = elem->next){
+    if(strstr(elem->name, subStrig)){
+      aux = elem;
+      printf("%s\n",elem->name);
+      elem = elem->prev;
+      elem->next = aux->next;
+      free(aux);
+    }
+  }
+  return list;
 }
