@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <strings.h>
-#include <xlocale.h>
+
 
 typedef struct SCHEDULE
 {
@@ -20,6 +20,7 @@ typedef struct SCHEDULE
 DataType *newContact(char *, char *, char *, unsigned long int, char *, DataType*);
 DataType *create();
 void print(DataType *);
+void printInverse(DataType *);
 void freeList(DataType *);
 DataType *newRegister(DataType *);
 DataType *deleteContact(DataType *);
@@ -28,8 +29,10 @@ DataType *deleteContact(DataType *);
 int main()
 {
 
-    DataType *list;
-    list = create();
+    DataType *head;
+    DataType *tail;
+    head = create();
+    tail = create();
 
     char name[101];
     char phone[101];
@@ -41,7 +44,7 @@ int main()
     char value[101];
 
     int count = 0;
-    int dolar = 0;
+    int dollar = 0;
 
     while((fscanf(fp, "%[^\n]%*c", value)) != EOF)
     {
@@ -68,18 +71,23 @@ int main()
         count++;
         if(value[0] == '$')
         {
-            list = newContact(name, phone, adress, cep, date_of_birth, list);
+            if(dollar == 0){
+                head = newContact(name, phone, adress, cep, date_of_birth,head);
+            }else{
+                tail = newContact(name, phone, adress, cep, date_of_birth,head);
+            }
             count = 0;
-            dolar++;
-            printf("%d\n", dolar);
+            dollar++;
+            printf("%d\n", dollar);
         }
     }
     fclose(fp);
-    // list = newRegister(list);
-    print(list);
-    deleteContact(list);
-    print(list);
-    // freeList(list);
+    //head = newRegister(head);
+    print(head);
+    deleteContact(head);
+    print(head);
+    //printInverse(tail);
+    freeList(head);
     return 0;
 }
 
@@ -88,11 +96,8 @@ DataType *create()
     return NULL;
 }
 
-DataType *newContact(char *name, char *phone, char *adress, unsigned long int cep, char *date_of_birth, DataType *head)
+DataType *newContact(char *name, char *phone, char *adress, unsigned long int cep, char *date_of_birth, DataType *list)
 {
-    // printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
-    // printf("%s\n%s\n%s\n%u\n%s\n", name, phone, adress, cep, date_of_birth);
-    // printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
     DataType *contact;
     contact = (DataType *)malloc(sizeof(DataType));
 
@@ -101,33 +106,32 @@ DataType *newContact(char *name, char *phone, char *adress, unsigned long int ce
     {
         printf("\nCannot allocate memory\n");
     }
-    
+
     strcpy(contact->name, name);
     strcpy(contact->phone, phone);
     strcpy(contact->adress, adress);
     strcpy(contact->date_of_birth, date_of_birth);
     contact->cep = cep;
 
-    if(head == NULL)
+    if(list == NULL)
     {
         contact->next = NULL;
         contact->prev = NULL;
         return contact;
-
     }
-    
+
     DataType *current;
-    for(current = head; current != NULL; current = current->next)
+    for(current = list; current != NULL; current = current->next)
     {
         if(current->next == NULL)
         {
             current->next = contact;
             contact->next = NULL;
             contact->prev = current;
+            return contact;
         }
-        
+
     }
-    return contact;
 }
 
 void print(DataType *list)
@@ -138,6 +142,16 @@ void print(DataType *list)
         printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
         printf("%s\n%s\n%s\n%lu\n%s\n", contact->name, contact->phone, contact->adress, contact->cep, contact->date_of_birth);
         printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+    }
+}
+void printInverse(DataType *list)
+{
+    DataType *contact;
+    for(contact = list; contact != NULL; contact = contact->prev)
+    {
+        printf("#################################################################\n");
+        printf("%s\n%s\n%s\n%lu\n%s\n", contact->name, contact->phone, contact->adress, contact->cep, contact->date_of_birth);
+        printf("##################################################################\n");
     }
 }
 
@@ -224,13 +238,19 @@ DataType *deleteContact(DataType* list)
     {
         if(strstr(contact->name, subStr))
         {
-            temp = contact;
-            printf("TEMP = %p\nCONTACT = %p\n", temp, contact);
-            printf("%s\n",contact->name);
-            contact = contact->prev;
-            printf("PREV = %p\n", contact);
-            contact->next = temp->next;
-            free(temp);
+            if(contact->prev == NULL){
+              temp = contact;
+              printf("TEMP %p\n", temp);
+              contact = contact->next;
+              printf("contact->next %p\n", contact);
+              contact->prev = NULL;
+              free(temp);
+            }else{
+              temp = contact;
+              contact = contact->prev;
+              contact->next = temp->next;
+              free(temp);
+          }
         }
     }
     return list;
