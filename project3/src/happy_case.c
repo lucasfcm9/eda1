@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <strings.h>
+#include <xlocale.h>
 
 typedef struct SCHEDULE
 {
@@ -39,6 +41,7 @@ int main()
     char value[101];
 
     int count = 0;
+    int dolar = 0;
 
     while((fscanf(fp, "%[^\n]%*c", value)) != EOF)
     {
@@ -67,6 +70,8 @@ int main()
         {
             list = newContact(name, phone, adress, cep, date_of_birth, list);
             count = 0;
+            dolar++;
+            printf("%d\n", dolar);
         }
     }
     fclose(fp);
@@ -83,7 +88,7 @@ DataType *create()
     return NULL;
 }
 
-DataType *newContact(char *name, char *phone, char *adress, unsigned long int cep, char *date_of_birth, DataType *list)
+DataType *newContact(char *name, char *phone, char *adress, unsigned long int cep, char *date_of_birth, DataType *head)
 {
     // printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
     // printf("%s\n%s\n%s\n%u\n%s\n", name, phone, adress, cep, date_of_birth);
@@ -96,29 +101,33 @@ DataType *newContact(char *name, char *phone, char *adress, unsigned long int ce
     {
         printf("\nCannot allocate memory\n");
     }
+    
     strcpy(contact->name, name);
     strcpy(contact->phone, phone);
     strcpy(contact->adress, adress);
     strcpy(contact->date_of_birth, date_of_birth);
     contact->cep = cep;
 
-    if(list == NULL)
+    if(head == NULL)
     {
         contact->next = NULL;
         contact->prev = NULL;
         return contact;
 
     }
+    
     DataType *current;
-    for(current = list; current != NULL; current = current->next)
+    for(current = head; current != NULL; current = current->next)
     {
-        if(current->next == NULL){
+        if(current->next == NULL)
+        {
             current->next = contact;
             contact->next = NULL;
             contact->prev = current;
         }
+        
     }
-    return list;
+    return contact;
 }
 
 void print(DataType *list)
@@ -205,21 +214,21 @@ DataType *deleteContact(DataType* list)
     char *subStr;
     subStr = (char *)malloc(1001 * sizeof(char));
 
-    printf("Enter the name or part of the name of the person(s) to be removed from the list:\n");
+    printf("Enter the name:\n");
     scanf("%[^\n]%*c", subStr);
 
     DataType *contact;
     DataType *temp;
-
-    temp = (DataType *)malloc(sizeof(DataType));
 
     for(contact = list; contact != NULL; contact = contact->next)
     {
         if(strstr(contact->name, subStr))
         {
             temp = contact;
+            printf("TEMP = %p\nCONTACT = %p\n", temp, contact);
             printf("%s\n",contact->name);
             contact = contact->prev;
+            printf("PREV = %p\n", contact);
             contact->next = temp->next;
             free(temp);
         }
