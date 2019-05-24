@@ -23,7 +23,8 @@ void print(DataType *);
 void printInverse(DataType *);
 void freeList(DataType *);
 DataType *newRegister(DataType *);
-DataType *deleteContact(DataType *);
+DataType *deleteContact(DataType *, DataType*);
+DataType *searchString(DataType *);
 
 
 int main()
@@ -84,9 +85,9 @@ int main()
     fclose(fp);
     //head = newRegister(head);
     print(head);
-    deleteContact(head);
-    print(head);
-    //printInverse(tail);
+    head = searchString(head);
+    //print(head);
+    printInverse(tail);
     freeList(head);
     return 0;
 }
@@ -223,7 +224,7 @@ void freeList(DataType *list)
     }
 }
 
-DataType *deleteContact(DataType* list)
+DataType *searchString(DataType* list)
 {
     char *subStr;
     subStr = (char *)malloc(1001 * sizeof(char));
@@ -232,26 +233,27 @@ DataType *deleteContact(DataType* list)
     scanf("%[^\n]%*c", subStr);
 
     DataType *contact;
-    DataType *temp;
 
     for(contact = list; contact != NULL; contact = contact->next)
     {
         if(strstr(contact->name, subStr))
-        {
-            if(contact->prev == NULL){
-              temp = contact;
-              printf("TEMP %p\n", temp);
-              contact = contact->next;
-              printf("contact->next %p\n", contact);
-              contact->prev = NULL;
-              free(temp);
-            }else{
-              temp = contact;
-              contact = contact->prev;
-              contact->next = temp->next;
-              free(temp);
-          }
-        }
+          list = deleteContact(contact, list);
     }
     return list;
+}
+DataType *deleteContact(DataType* contact,DataType* list){
+  DataType *temp;
+  if(contact->prev == NULL){
+    temp = contact;
+    contact = contact->next;
+    contact->prev = NULL;
+    free(temp);
+    return contact;
+  }else{
+    temp = contact;
+    contact = contact->prev;
+    contact->next = temp->next;
+    free(temp);
+    return list;
+  }
 }
