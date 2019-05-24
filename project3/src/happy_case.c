@@ -259,6 +259,8 @@ void deleteContact(DataType* contact,DataType** head, DataType** tail){
     temp = contact;
     contact = contact->prev;
     contact->next = temp->next;
+    contact = temp->next;
+    contact->prev = temp->prev;
     free(temp);
   }
 }
