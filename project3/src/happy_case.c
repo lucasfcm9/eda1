@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <strings.h>
-
+#include <ctype.h>
 
 typedef struct SCHEDULE
 {
@@ -22,10 +22,11 @@ DataType *create();
 void print(DataType *);
 void printInverse(DataType *);
 void freeList(DataType *);
-DataType *newRegister(DataType *);
+void newRegister(DataType *, DataType**);
 void deleteContact(DataType *, DataType**, DataType**);
 void searchString(DataType **, DataType**);
-
+void seeRegister(DataType*); //vizualizar registros que possuem certa string no nome
+void sort(DataType**, DataType **);
 
 int main()
 {
@@ -83,11 +84,14 @@ int main()
         }
     }
     fclose(fp);
-    //head = newRegister(head);
     print(head);
-    searchString(&head, &tail);
-    //print(head);
-    printInverse(tail);
+    //newRegister(head, &tail);
+    //seeRegister(head);
+    //searchString(&head, &tail);
+    sort(&head, &tail);
+    printf("\n\nSORTED*************************************************************88\n");
+    print(head);
+    //printInverse(tail);
     freeList(head);
     return 0;
 }
@@ -156,7 +160,7 @@ void printInverse(DataType *list)
     }
 }
 
-DataType *newRegister(DataType *list)
+void newRegister(DataType *list, DataType **ptail)
 {
     char name[101];
     char phone[101];
@@ -211,7 +215,7 @@ DataType *newRegister(DataType *list)
             check_date = false;
         }
     } while(check_date);
-    return newContact(name, phone, adress, cep, date_of_birth, list);
+    *(ptail) = newContact(name, phone, adress, cep, date_of_birth, list);
 }
 
 void freeList(DataType *list)
@@ -226,16 +230,24 @@ void freeList(DataType *list)
 
 void searchString(DataType** head, DataType** tail)
 {
-    char *subStr;
-    subStr = (char *)malloc(1001 * sizeof(char));
+    char subStr[101];
 
     printf("Enter the name:\n");
     scanf("%[^\n]%*c", subStr);
 
+    //PASSANDO A SUBSTRING PARA MINUSCULO
+    for(int i = 0; subStr[i]; i++){
+      subStr[i] = tolower(subStr[i]);
+    }
     DataType *contact;
 
     for(contact = *(head); contact != NULL; contact = contact->next)
     {
+        //PASSANDO TODAS AS LETRAS DO NOME DA AGENDA PARA MINUSCULO
+        for(int i = 0; contact->name[i]; i++){
+          contact->name[i] = tolower(contact->name[i]);
+        }
+
         if(strstr(contact->name, subStr))
             deleteContact(contact,head, tail);
     }
@@ -263,4 +275,38 @@ void deleteContact(DataType* contact,DataType** head, DataType** tail){
     contact->prev = temp->prev;
     free(temp);
   }
+}
+
+void seeRegister(DataType *head){
+  char subStr[101];
+
+  printf("Enter the name:\n");
+  scanf("%[^\n]%*c", subStr);
+
+  //PASSANDO A SUBSTRING PARA MINUSCULO
+  for(int i = 0; subStr[i]; i++){
+    subStr[i] = tolower(subStr[i]);
+  }
+  DataType *contact;
+
+  for(contact = head ; contact != NULL; contact = contact->next)
+  {
+      //PASSANDO TODAS AS LETRAS DO NOME DA AGENDA PARA MINUSCULO
+      for(int i = 0; contact->name[i]; i++){
+        contact->name[i] = tolower(contact->name[i]);
+      }
+
+      if(strstr(contact->name, subStr)){
+        printf("------------------------------------------------------------------------------------------\n");
+        printf("%s\n%s\n%s\n%lu\n%s\n", contact->name, contact->phone, contact->adress, contact->cep, contact->date_of_birth);
+        printf("-------------------------------------------------------------------------------------------\n");
+
+      }
+  }
+
+}
+
+void sort(DataType **phead, DataType **ptail){
+  //sort na lista encadeada (obs: tomar cuidado para arranjar as ligações nos dois sentidos da lista)
+  
 }
