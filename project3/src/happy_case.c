@@ -81,19 +81,41 @@ int main()
             }
             count = 0;
             dollar++;
-            printf("%d\n", dollar);
         }
     }
+
     fclose(fp);
-    //print(head);
-    newRegister(head, &tail);
-    //seeRegister(head);
-    //searchString(&head, &tail);
-    sort(&head);
-    print(head);
-    getOut(head);
-    // printInverse(tail);
-    freeList(head);
+
+    int option;
+
+    do {
+      printf("\t\t\t AGENDA \t\t\t\n");
+      printf("Selecione uma das opções\n");
+      printf("1- Inserir novo registro\n");
+      printf("2- Remover registros que contenham certa string no nome\n");
+      printf("3 - Visualizar registros que contenham certa string no nome\n");
+      printf("4- Visualizar todos os registros em ordem alfabética de acordo com o nome\n");
+      printf("5 - Sair\n");
+      printf("Digite o numero de uma das opções acima \n");
+      scanf("%d%*c",&option);
+
+      switch (option) {
+        case 1: newRegister(head, &tail);
+                break;
+        case 2: searchString(&head, &tail);
+                break;
+        case 3: seeRegister(head);
+                break;
+        case 4: sort(&head);
+                print(head);
+                break;
+        case 5: getOut(head);
+                break;
+        default: printf("Digite uma opção valida\n");
+
+      }
+    }while(option != 5);
+
     return 0;
 }
 
@@ -357,4 +379,5 @@ void getOut(DataType *head){
     fprintf(fp, "%s\n%s\n%s\n%lu\n%s\n$\n",elem->name, elem->phone, elem->adress, elem->cep, elem->date_of_birth);
   }
   fclose(fp);
+  freeList(head);
 }
