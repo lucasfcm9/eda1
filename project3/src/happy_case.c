@@ -26,7 +26,7 @@ void newRegister(DataType *, DataType**);
 void deleteContact(DataType *, DataType**, DataType**);
 void searchString(DataType **, DataType**);
 void seeRegister(DataType*); //vizualizar registros que possuem certa string no nome
-void sort(DataType**, DataType **);
+void sort(DataType**);
 
 int main()
 {
@@ -42,7 +42,7 @@ int main()
     unsigned long int cep;
     char date_of_birth[101];
 
-    FILE *fp = fopen("Contacts.txt", "r");
+    FILE *fp = fopen("Contacts.txt", "r+");
     char value[101];
 
     int count = 0;
@@ -84,14 +84,13 @@ int main()
         }
     }
     fclose(fp);
-    print(head);
-    //newRegister(head, &tail);
+    //print(head);
+    newRegister(head, &tail);
     //seeRegister(head);
-    //searchString(&head, &tail);
-    sort(&head, &tail);
-    printf("\n\nSORTED*************************************************************88\n");
+    searchString(&head, &tail);
+    sort(&head);
     print(head);
-    //printInverse(tail);
+    // printInverse(tail);
     freeList(head);
     return 0;
 }
@@ -306,7 +305,46 @@ void seeRegister(DataType *head){
 
 }
 
-void sort(DataType **phead, DataType **ptail){
-  //sort na lista encadeada (obs: tomar cuidado para arranjar as ligações nos dois sentidos da lista)
-  
+void sort(DataType **phead){
+  int n;
+  DataType *current = *phead;
+
+  if(current->next == NULL)
+    return;
+
+  DataType *aux, *temp;
+  current  = current->next;
+
+  while(current != NULL){
+    n = 0;
+    aux = current;
+    temp = current->prev;
+    current = current->next;
+
+    while(temp != NULL && strcmp(temp->name, aux->name)>0){
+      n++;
+      temp = temp->prev;
+    }
+    if(n){
+      aux->prev->next = aux->next;
+
+      if(aux->next != NULL){
+        aux->next->prev = aux->prev;
+      }
+      if(temp == NULL){
+        temp = *(phead);
+        aux->prev = NULL;
+        aux->next = temp;
+        aux->next->prev = aux;
+        *(phead) = aux;
+      } else {
+        temp = temp->next;
+        temp->prev->next = aux;
+        aux->prev = temp->prev;
+        temp->prev = aux;
+        aux ->next = temp;
+      }
+    }
+  }
+
 }
