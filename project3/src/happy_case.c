@@ -27,6 +27,7 @@ void deleteContact(DataType *, DataType**, DataType**);
 void searchString(DataType **, DataType**);
 void seeRegister(DataType*); //vizualizar registros que possuem certa string no nome
 void sort(DataType**);
+void getOut(DataType *);
 
 int main()
 {
@@ -42,7 +43,7 @@ int main()
     unsigned long int cep;
     char date_of_birth[101];
 
-    FILE *fp = fopen("Contacts.txt", "r+");
+    FILE *fp = fopen("Contacts.txt", "r");
     char value[101];
 
     int count = 0;
@@ -87,9 +88,10 @@ int main()
     //print(head);
     newRegister(head, &tail);
     //seeRegister(head);
-    searchString(&head, &tail);
+    //searchString(&head, &tail);
     sort(&head);
     print(head);
+    getOut(head);
     // printInverse(tail);
     freeList(head);
     return 0;
@@ -346,5 +348,13 @@ void sort(DataType **phead){
       }
     }
   }
+}
 
+void getOut(DataType *head){
+  FILE *fp = fopen("Contacts.txt", "w+");
+  DataType *elem;
+  for(elem = head; elem != NULL; elem = elem->next){
+    fprintf(fp, "%s\n%s\n%s\n%lu\n%s\n$\n",elem->name, elem->phone, elem->adress, elem->cep, elem->date_of_birth);
+  }
+  fclose(fp);
 }
