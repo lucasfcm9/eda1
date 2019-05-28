@@ -22,7 +22,7 @@ DataType *create();
 void print(DataType *);
 void printInverse(DataType *);
 void freeList(DataType *);
-void newRegister(DataType *, DataType**);
+void newRegister(DataType **, DataType**);
 void deleteContact(DataType *, DataType**, DataType**);
 void searchString(DataType **, DataType**);
 void seeRegister(DataType*); //vizualizar registros que possuem certa string no nome
@@ -43,7 +43,7 @@ int main()
     unsigned long int cep;
     char date_of_birth[101];
 
-    FILE *fp = fopen("Contacts.txt", "r");
+    FILE *fp = fopen("Contacts.txt", "a+");
     char value[101];
 
     int count = 0;
@@ -52,7 +52,6 @@ int main()
     while((fscanf(fp, "%[^\n]%*c", value)) != EOF)
     {
         // printf("%s\n%d\n", value, count);
-
         switch(count)
         {
             case 0:
@@ -82,7 +81,22 @@ int main()
             count = 0;
             dollar++;
         }
+
     }
+    // if((fscanf(fp, "%[^\n]%*c", value)) == EOF){
+    //
+    //       strcpy(name, value);
+    //
+    //       strcpy(phone, value);
+    //
+    //       strcpy(adress, value);
+    //
+    //       cep = strtoul(value, NULL, 10);
+    //
+    //       strcpy(date_of_birth, value);
+    //
+    //       head = newContact(name, phone, adress, cep, date_of_birth,head);
+    // }
 
     fclose(fp);
 
@@ -100,7 +114,7 @@ int main()
       scanf("%d%*c",&option);
 
       switch (option) {
-        case 1: newRegister(head, &tail);
+        case 1: newRegister(&head, &tail);
                 break;
         case 2: searchString(&head, &tail);
                 break;
@@ -143,6 +157,7 @@ DataType *newContact(char *name, char *phone, char *adress, unsigned long int ce
 
     if(list == NULL)
     {
+
         contact->next = NULL;
         contact->prev = NULL;
         return contact;
@@ -160,10 +175,13 @@ DataType *newContact(char *name, char *phone, char *adress, unsigned long int ce
         }
 
     }
+
+    return contact;
 }
 
 void print(DataType *list)
 {
+
     DataType *contact;
     for(contact = list; contact != NULL; contact = contact->next)
     {
@@ -183,7 +201,7 @@ void printInverse(DataType *list)
     }
 }
 
-void newRegister(DataType *list, DataType **ptail)
+void newRegister(DataType **list, DataType **ptail)
 {
     char name[101];
     char phone[101];
@@ -191,7 +209,7 @@ void newRegister(DataType *list, DataType **ptail)
     unsigned long int cep;
     char date_of_birth[101];
 
-    printf("Enter your name: ");
+    printf("Insira o nome: ");
     scanf("%[^\n]%*c", name);
 
     bool check_phone = false;
@@ -199,12 +217,12 @@ void newRegister(DataType *list, DataType **ptail)
     //XXXXX[-]XXXX
     do
     {
-        printf("Enter your phone number -> [XXXXX-XXXX]: ");
+        printf("Insira um número de telefone -> [XXXXX-XXXX]: ");
         scanf("%[^\n]%*c", phone);
 
-        if(phone[5] != '-')
+        if(phone[5] != '-' || strlen(phone) > 10)
         {
-            printf("Error, type again\n");
+            printf("Erro, Digite Novamente\n");
             check_phone = true;
         }
         else{
@@ -212,12 +230,12 @@ void newRegister(DataType *list, DataType **ptail)
         }
     } while(check_phone);
 
-    printf("Enter your adress: ");
+    printf("Insira o endereço: ");
     scanf("%[^\n]%*c", adress);
 
     unsigned long int tmp;
 
-    printf("Enter your CEP: ");
+    printf("Insira o CEP: ");
     scanf("%lu%*c", &tmp);
     cep = (unsigned long int) tmp;
 
@@ -225,12 +243,12 @@ void newRegister(DataType *list, DataType **ptail)
 
     do
     {
-        printf("Enter your date of birth -> [XX/XX/XXXX]: ");
+        printf("Insira a Data de Nascimento (Neste formato) -> [XX/XX/XXXX]: ");
         scanf("%[^\n]%*c", date_of_birth);
         // 26[/]11[/]1996
-        if(date_of_birth[2] != '/' || date_of_birth[5] != '/')
+        if(date_of_birth[2] != '/' || date_of_birth[5] != '/' || strlen(date_of_birth) > 10)
         {
-            printf("Error, type again\n");
+            printf("Erro, tente novamente\n");
             check_date = true;
         }
         else
@@ -238,7 +256,18 @@ void newRegister(DataType *list, DataType **ptail)
             check_date = false;
         }
     } while(check_date);
-    *(ptail) = newContact(name, phone, adress, cep, date_of_birth, list);
+
+    printf("\n---------------------------------\n\n");
+    printf("Contato cadastrado com sucesso!\n\n");
+    printf("---------------------------------\n\n");
+
+    if(*(list) == NULL){
+      *(list) = newContact(name, phone, adress, cep, date_of_birth, *(list));
+    }
+    else{
+      *(ptail) = newContact(name, phone, adress, cep, date_of_birth, *(list));
+    }
+
 }
 
 void freeList(DataType *list)
@@ -255,7 +284,7 @@ void searchString(DataType** head, DataType** tail)
 {
     char subStr[101];
 
-    printf("Enter the name:\n");
+    printf("Insira um Caracter ou uma String:\n");
     scanf("%[^\n]%*c", subStr);
 
     //PASSANDO A SUBSTRING PARA MINUSCULO
@@ -264,6 +293,13 @@ void searchString(DataType** head, DataType** tail)
     }
     DataType *contact;
 
+    if(*(head) == NULL){
+      printf("####################\n\n");
+      printf("Nenhum Contato existente.\nNada Excluído\n\n");
+      printf("####################\n\n");
+      return;
+    }
+
     for(contact = *(head); contact != NULL; contact = contact->next)
     {
         //PASSANDO TODAS AS LETRAS DO NOME DA AGENDA PARA MINUSCULO
@@ -271,25 +307,40 @@ void searchString(DataType** head, DataType** tail)
           contact->name[i] = tolower(contact->name[i]);
         }
 
+
         if(strstr(contact->name, subStr))
             deleteContact(contact,head, tail);
+
     }
 
 }
 void deleteContact(DataType* contact,DataType** head, DataType** tail){
+
   DataType *temp;
-  if(contact->prev == NULL){
+  if(contact->prev == NULL && contact->next == NULL){
+
+    *head = NULL;
+    printf("\n---------------------------------\n\n");
+    printf("Contato EXCLUÍDO com sucesso!\n\n");
+    printf("---------------------------------\n\n");
+  }else if(contact->prev == NULL){
     temp = contact;
     contact = contact->next;
     contact->prev = NULL;
     free(temp);
     *(head) = contact;
+    printf("\n---------------------------------\n\n");
+    printf("Contato EXCLUÍDO com sucesso!\n\n");
+    printf("---------------------------------\n\n");
   }else if(contact->next == NULL){
     temp = contact;
     contact = contact->prev;
     contact->next = NULL;
     free(temp);
     *(tail) = contact;
+    printf("\n---------------------------------\n\n");
+    printf("Contato EXCLUÍDO com sucesso!\n\n");
+    printf("---------------------------------\n\n");
   } else {
     temp = contact;
     contact = contact->prev;
@@ -297,19 +348,31 @@ void deleteContact(DataType* contact,DataType** head, DataType** tail){
     contact = temp->next;
     contact->prev = temp->prev;
     free(temp);
+    printf("\n---------------------------------\n\n");
+    printf("Contato EXCLUÍDO com sucesso!\n\n");
+    printf("---------------------------------\n\n");
   }
 }
 
 void seeRegister(DataType *head){
   char subStr[101];
 
-  printf("Enter the name:\n");
+  printf("Insira um Caracter ou uma String:\n");
   scanf("%[^\n]%*c", subStr);
 
   //PASSANDO A SUBSTRING PARA MINUSCULO
   for(int i = 0; subStr[i]; i++){
     subStr[i] = tolower(subStr[i]);
   }
+
+  if(head == NULL){
+    printf("####################\n\n");
+    printf("Nenhum Contato existente.\n\n");
+    printf("####################\n\n");
+    return;
+  }
+
+
   DataType *contact;
 
   for(contact = head ; contact != NULL; contact = contact->next)
@@ -324,17 +387,38 @@ void seeRegister(DataType *head){
         printf("%s\n%s\n%s\n%lu\n%s\n", contact->name, contact->phone, contact->adress, contact->cep, contact->date_of_birth);
         printf("-------------------------------------------------------------------------------------------\n");
 
+      }else{
+        printf("####################\n\n");
+        printf("Nenhum Contato existente.\n\n");
+        printf("####################\n\n");
       }
   }
 
 }
 
 void sort(DataType **phead){
-  int n;
-  DataType *current = *phead;
 
-  if(current->next == NULL)
+  if(*(phead) == NULL){
+    printf("####################\n\n");
+    printf("Nenhum Contato existente.\n\n");
+    printf("####################\n\n");
     return;
+  }
+
+  int n;
+  DataType *current;
+
+  for(current = *phead; current != NULL; current = current->next){
+    for(int i = 0; current->name[i]; i++){
+      current->name[i] = tolower(current->name[i]);
+    }
+  }
+
+  current = *phead;
+
+  if(current->next == NULL){
+    return;
+  }
 
   DataType *aux, *temp;
   current  = current->next;
