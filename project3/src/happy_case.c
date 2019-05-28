@@ -88,7 +88,7 @@ int main()
         }
 
     }
-    
+
 
     fclose(fp);
 
@@ -366,7 +366,7 @@ void seeRegister(DataType *head){
 
 
   DataType *contact;
-
+  int countContacts = 0;
   for(contact = head ; contact != NULL; contact = contact->next)
   {
       //PASSANDO TODAS AS LETRAS DO NOME DA AGENDA PARA MINUSCULO
@@ -378,12 +378,14 @@ void seeRegister(DataType *head){
         printf("------------------------------------------------------------------------------------------\n");
         printf("%s\n%s\n%s\n%lu\n%s\n", contact->name, contact->phone, contact->adress, contact->cep, contact->date_of_birth);
         printf("-------------------------------------------------------------------------------------------\n");
-
-      }else{
-        printf("\n---------------------------\n\n");
-        printf("Nenhum Contato existente.\n\n");
-        printf("---------------------------\n\n");
+        countContacts++;
       }
+  }
+
+  if(countContacts == 0){
+    printf("\n---------------------------\n\n");
+    printf("Nenhum Contato existente.\n\n");
+    printf("---------------------------\n\n");
   }
 
 }
