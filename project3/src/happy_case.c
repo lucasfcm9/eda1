@@ -51,7 +51,7 @@ int main()
 
     while((fscanf(fp, "%[^\n]%*c", value)) != EOF)
     {
-        // printf("%s\n%d\n", value, count);
+
         switch(count)
         {
             case 0:
@@ -83,20 +83,7 @@ int main()
         }
 
     }
-    // if((fscanf(fp, "%[^\n]%*c", value)) == EOF){
-    //
-    //       strcpy(name, value);
-    //
-    //       strcpy(phone, value);
-    //
-    //       strcpy(adress, value);
-    //
-    //       cep = strtoul(value, NULL, 10);
-    //
-    //       strcpy(date_of_birth, value);
-    //
-    //       head = newContact(name, phone, adress, cep, date_of_birth,head);
-    // }
+    
 
     fclose(fp);
 
@@ -185,9 +172,9 @@ void print(DataType *list)
     DataType *contact;
     for(contact = list; contact != NULL; contact = contact->next)
     {
-        printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+        printf("\n------------------------------------------------------------\n");
         printf("%s\n%s\n%s\n%lu\n%s\n", contact->name, contact->phone, contact->adress, contact->cep, contact->date_of_birth);
-        printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+        printf("\n------------------------------------------------------------\n");
     }
 }
 void printInverse(DataType *list)
@@ -195,9 +182,9 @@ void printInverse(DataType *list)
     DataType *contact;
     for(contact = list; contact != NULL; contact = contact->prev)
     {
-        printf("#################################################################\n");
+        printf("\n------------------------------------------------------------\n");
         printf("%s\n%s\n%s\n%lu\n%s\n", contact->name, contact->phone, contact->adress, contact->cep, contact->date_of_birth);
-        printf("##################################################################\n");
+        printf("\n------------------------------------------------------------\n");
     }
 }
 
@@ -294,9 +281,9 @@ void searchString(DataType** head, DataType** tail)
     DataType *contact;
 
     if(*(head) == NULL){
-      printf("####################\n\n");
+      printf("\n---------------------------\n\n");
       printf("Nenhum Contato existente.\nNada Excluído\n\n");
-      printf("####################\n\n");
+      printf("---------------------------\n\n");
       return;
     }
 
@@ -366,9 +353,9 @@ void seeRegister(DataType *head){
   }
 
   if(head == NULL){
-    printf("####################\n\n");
+    printf("\n---------------------------\n\n");
     printf("Nenhum Contato existente.\n\n");
-    printf("####################\n\n");
+    printf("---------------------------\n\n");
     return;
   }
 
@@ -388,9 +375,9 @@ void seeRegister(DataType *head){
         printf("-------------------------------------------------------------------------------------------\n");
 
       }else{
-        printf("####################\n\n");
+        printf("\n---------------------------\n\n");
         printf("Nenhum Contato existente.\n\n");
-        printf("####################\n\n");
+        printf("---------------------------\n\n");
       }
   }
 
@@ -399,9 +386,9 @@ void seeRegister(DataType *head){
 void sort(DataType **phead){
 
   if(*(phead) == NULL){
-    printf("####################\n\n");
+    printf("\n---------------------------\n\n");
     printf("Nenhum Contato existente.\n\n");
-    printf("####################\n\n");
+    printf("---------------------------\n\n");
     return;
   }
 
