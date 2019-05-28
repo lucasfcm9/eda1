@@ -43,7 +43,7 @@ int main()
     unsigned long int cep;
     char date_of_birth[101];
 
-    FILE *fp = fopen("Contacts.txt", "a+");
+    FILE *fp = fopen("Contacts.txt", "r+");
     char value[101];
 
     int count = 0;
