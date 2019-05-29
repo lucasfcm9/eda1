@@ -7,8 +7,6 @@ Disciplina: Estruturas de Dados 1
 Professor: Mateus Mendelson
 
 */
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -70,21 +68,21 @@ int main()
 
         switch (count)
         {
-            case 0:
-                strcpy(name, value);
-                break;
-            case 1:
-                strcpy(phone, value);
-                break;
-            case 2:
-                strcpy(adress, value);
-                break;
-            case 3:
-                cep = strtoul(value, NULL, 10);
-                break;
-            case 4:
-                strcpy(date_of_birth, value);
-                break;
+        case 0:
+            strcpy(name, value);
+            break;
+        case 1:
+            strcpy(phone, value);
+            break;
+        case 2:
+            strcpy(adress, value);
+            break;
+        case 3:
+            cep = strtoul(value, NULL, 10);
+            break;
+        case 4:
+            strcpy(date_of_birth, value);
+            break;
         }
         count++;
         if (value[0] == '$')
@@ -122,24 +120,24 @@ int main()
 
         switch (option)
         {
-            case 1:
-                newRegister(&head, &tail);
-                break;
-            case 2:
-                searchString(&head, &tail);
-                break;
-            case 3:
-                seeRegister(head);
-                break;
-            case 4:
-                sort(&head);
-                print(head);
-                break;
-            case 5:
-                getOut(head);
-                break;
-            default:
-                printf("Digite uma opção válida, por favor\n");
+        case 1:
+            newRegister(&head, &tail);
+            break;
+        case 2:
+            searchString(&head, &tail);
+            break;
+        case 3:
+            seeRegister(head);
+            break;
+        case 4:
+            sort(&head);
+            print(head);
+            break;
+        case 5:
+            getOut(head);
+            break;
+        default:
+            printf("Digite uma opção válida, por favor\n");
         }
     } while (option != 5);
 
