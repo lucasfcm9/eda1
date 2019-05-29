@@ -1,5 +1,8 @@
 # Prerequisites
 *.d
+main
+bin
+prog
 
 # Object files
 *.o
