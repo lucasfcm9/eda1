@@ -39,6 +39,11 @@ int main(){
   int num_voos;
   fila.ini = NULL;
   fila.fim = NULL;
+
+  Lista_voo *pista_1;
+  Lista_voo *pista_2;
+  Lista_voo *pista_3;
+
   //GERANDO UM NUMERO ENTRE 20 E 64
   num_voos = rand() % 44 + 20;
   //Iniciando os voos de acordo com o num_voos
@@ -52,19 +57,44 @@ int main(){
   int pouso = 0;
   int decolagem = 0;
   int count = 0;
-  
-  // while(count != 120){
-  //   if(d_combustivel==10){
-  //     d_combustivel = 0;
-  //   }
-  //   d_combustivel++;
-  //   count++;
-  // }
+  Lista_voo *atual;
+  int i = 0;
+    printf("##########################  PISTAS ##############################3\n");
+   while(count != 10){
+     
+    decresce_combustivel(&fila);
 
-   imprime(&fila);
+
+    for(atual = fila.ini; atual != NULL; atual = atual->prox){
+        if(i == 0){
+          pista_1 = atual;
+          printf("----------------------  %d ---------------------------------\n", i);
+          printf("%s\n%c\n%d\n", pista_1->codigo, pista_1->modo, pista_1->combustivel);
+        }
+        else if(i == 1){
+          pista_2 = atual;
+          printf("----------------------  %d ---------------------------------\n", i);
+          printf("%s\n%c\n%d\n", pista_2->codigo, pista_2->modo, pista_2->combustivel);
+        }
+        else if(i == 2){
+          pista_3 = atual;
+          printf("----------------------  %d ---------------------------------\n", i);
+          printf("%s\n%c\n%d\n", pista_3->codigo, pista_3->modo, pista_3->combustivel);
+        }
+      i++;
+    }
+     if(d_combustivel==10){
+       d_combustivel = 0;
+     }
+     i = 0;
+     d_combustivel++;
+     count++;
+   }
+
+   //imprime(&fila);
    decresce_combustivel(&fila);
-   printf("Decresce combustivel #######################\n");
-   imprime(&fila);
+   //printf("Decresce combustivel #######################\n");
+   //imprime(&fila);
   return 0;
 }
 
@@ -110,8 +140,8 @@ void imprime(Fila *fila){
   Lista_voo *atual;
   int i = 0;
   for(atual = fila->ini; atual != NULL; atual = atual->prox){
-    printf("----------------------  %d ---------------------------------\n", i);
-    printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
+      printf("----------------------  %d ---------------------------------\n", i);
+      printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
     i++;
   }
 }
