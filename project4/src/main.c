@@ -107,22 +107,27 @@ int main(){
         //FOR para printar o primeiro, segunda e terceiro da fila em cada pista
         for(atual = fila.ini, i = 0; i < 3 ; i++, atual = atual->prox){
 
-            if(i == 0){
-              printf("\n3 Primeiros da fila:\n");
-              printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
-              printf("%s\n%c\n%d\n", (atual->prox)->codigo, (atual->prox)->modo, (atual->prox)->combustivel);
-              printf("%s\n%c\n%d\n", ((atual->prox)->prox)->codigo, ((atual->prox)->prox)->modo, ((atual->prox)->prox)->combustivel);
-            }
+            // if(i == 0){
+            //   printf("\n3 Primeiros da fila:\n");
+            //   printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
+            //   printf("%s\n%c\n%d\n", (atual->prox)->codigo, (atual->prox)->modo, (atual->prox)->combustivel);
+            //   printf("%s\n%c\n%d\n", ((atual->prox)->prox)->codigo, ((atual->prox)->prox)->modo, ((atual->prox)->prox)->combustivel);
+            // }
 
-            if((verification->modo == 'A' && verification->combustivel == 0) && ((verification->prox)->modo == 'A' && (verification->prox)->combustivel == 0) && (((verification->prox)->prox)->modo == 'A' && ((verification->prox)->prox)->combustivel == 0) && verificarPistas_verification == 0){
+            if((verification->modo == 'A' && verification->combustivel == 0) && ((verification->prox)->modo == 'A' && (verification->prox)->combustivel == 0) && (((verification->prox)->prox)->modo == 'A' && ((verification->prox)->prox)->combustivel == 0)){
 
-                    printf("\n !! ALERTA GERAL DE DESVIO DE AERONAVE !!\n");
+
+
+                    if(i == 0){
+
+                      printf("\n !! ALERTA GERAL DE DESVIO DE AERONAVE !!\n");
+                    }
+
 
                     //VERIFICAR PISTA 3
                       if(pista3_ocupada[0] == false && pista2_ocupada[0] == true && pista1_ocupada[0] == true){
-                        if(atual->modo == 'A' && atual->combustivel == 0){
-
                           pista_3 = atual;
+                          printf("\n-----------------------------------------------------------------\n");
                           printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
                           printf("Código do voo: %s\n", atual->codigo);
                           pista3_ocupada[0] = true;
@@ -132,38 +137,18 @@ int main(){
                           printf("Pista: 3\n");
                           printf("-----------------------------------------------------------------\n");
                           atual->status = true;
-
-                        }
-                        else if(atual->modo == 'D'){
-                          pista_3 = atual;
-                          printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
-                          printf("Código do voo: %s\n", atual->codigo);
-                          pista3_ocupada[0] = true;
-                          pista3_ocupada[1] = true;
-                          printf("Status: “aeronave decolou”\n");
-                          printf("Horário do início do procedimento: %.2d:%.2d:00\n", HORAS, MIN);
-                          printf("Pista: 3\n");
-                          printf("-----------------------------------------------------------------\n");
-                          atual->status = true;
-                        }
                       }
 
 
                     //VERIFICAR PISTA 2
                       if(pista2_ocupada[0] == false && pista1_ocupada[0] == true ){
                         pista_2 = atual;
+                        printf("\n-----------------------------------------------------------------\n");
                         printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
                         printf("Código do voo: %s\n", atual->codigo);
-                        if(atual->modo == 'A'){
-                          pista2_ocupada[0] = true;
-                          pista2_ocupada[1] = false;
-                          printf("Status: “aeronave pousou”\n");
-                        }
-                        else{
-                          pista2_ocupada[0] = true;
-                          pista2_ocupada[1] = true;
-                          printf("Status: “aeronave decolou”\n");
-                        }
+                        pista2_ocupada[0] = true;
+                        pista2_ocupada[1] = false;
+                        printf("Status: “aeronave pousou”\n");
                         printf("Horário do início do procedimento: %.2d:%.2d:00\n", HORAS, MIN);
                         printf("Pista: 2\n");
                         printf("-----------------------------------------------------------------\n\n");
@@ -176,16 +161,9 @@ int main(){
                         printf("\n-----------------------------------------------------------------\n");
                         printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
                         printf("Código do voo: %s\n", atual->codigo);
-                        if(atual->modo == 'A'){
-                          pista1_ocupada[0] = true;
-                          pista1_ocupada[1] = false;
-                          printf("Status: “aeronave pousou”\n");
-                        }
-                        else{
-                          pista1_ocupada[0] = true;
-                          pista1_ocupada[1] = true;
-                          printf("Status: “aeronave decolou”\n");
-                        }
+                        pista1_ocupada[0] = true;
+                        pista1_ocupada[1] = false;
+                        printf("Status: “aeronave pousou”\n");
                         printf("Horário do início do procedimento: %.2d:%.2d:00\n", HORAS, MIN);
                         printf("Pista: 1\n");
                         printf("-----------------------------------------------------------------\n\n");
@@ -194,9 +172,6 @@ int main(){
 
                         atual->nenhumaPista = true;
                       }
-
-
-                      i = 4;
             }
             else{
 
@@ -206,6 +181,7 @@ int main(){
                       if(atual->modo == 'A' && atual->combustivel == 0){
 
                         pista_3 = atual;
+                        printf("\n-----------------------------------------------------------------\n");
                         printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
                         printf("Código do voo: %s\n", atual->codigo);
                         pista3_ocupada[0] = true;
@@ -219,6 +195,7 @@ int main(){
                       }
                       else if(atual->modo == 'D'){
                         pista_3 = atual;
+                        printf("\n-----------------------------------------------------------------\n");
                         printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
                         printf("Código do voo: %s\n", atual->codigo);
                         pista3_ocupada[0] = true;
@@ -235,6 +212,7 @@ int main(){
                   //VERIFICAR PISTA 2
                     if(pista2_ocupada[0] == false && pista1_ocupada[0] == true ){
                       pista_2 = atual;
+                      printf("\n-----------------------------------------------------------------\n");
                       printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
                       printf("Código do voo: %s\n", atual->codigo);
                       if(atual->modo == 'A'){
@@ -278,8 +256,6 @@ int main(){
 
 
             }//FIM DO ELSE//
-
-            verificarPistas_verification = 1;
 
 
         }// FIM DO FOR DE LISTAS //
@@ -373,7 +349,7 @@ int main(){
        MIN += 5;
      }
 
-     printf("HORAS: %.2d:%.2d:00",HORAS, MIN);
+     //printf("HORAS: %.2d:%.2d:00",HORAS, MIN);
      count ++;
      i = 0;
      d_combustivel++;
@@ -409,7 +385,7 @@ void gera_voo(Fila *fila, int num_voo){
   if(elem->modo == 'A'){
     elem->combustivel = rand()%13;
   }else{
-    elem->combustivel = 100;
+    elem->combustivel = 12;
   }
   elem->status = false;
   elem->nenhumaPista = false;
@@ -438,11 +414,37 @@ void gera_voo(Fila *fila, int num_voo){
 }
 
 void imprime(Fila *fila){
+
   Lista_voo *atual;
+  Lista_voo *elem;
+  Lista_voo *anterior = NULL;
+  Lista_voo *aux = NULL;
   int i = 0;
 
+  //ordenando a lista após deletagem, onde os que possuirem 0 como combustivel irao para o inicio
+  for(elem = fila->ini, anterior = NULL; elem != NULL; anterior = elem, elem = elem->prox){
+    if(elem->combustivel == 0 && anterior != NULL){
+      //colocar um elmento do final no inicio
+
+      if(elem->prox == NULL){
+        //printf("null\n");
+        fila->fim = anterior;
+        anterior->prox = NULL;
+        elem->prox = fila->ini;
+        fila->ini = elem;
+      }else{
+        //printf("else\n");
+        anterior->prox = elem->prox;
+        elem->prox = fila->ini;
+        fila->ini = elem;
+        elem = anterior;
+      }
+    }
+  }
+
+
   for(atual = fila->ini; atual != NULL; atual = atual->prox){
-      printf("        [ %s – %c – prioridade]\n", atual->codigo, atual->modo);
+      printf("        [ %s – %c – %d ]\n", atual->codigo, atual->modo, atual->combustivel);
       //printf("%s\n%c\n%d\n", atual->codigo, atual->modo, atual->combustivel);
     i++;
   }
@@ -459,21 +461,30 @@ void decresce_combustivel(Fila *fila, int unidade_count){
       if(elem->modo == 'A'){
 
         elem->combustivel = elem->combustivel - 1;
-        printf("Aeronave: %s\nModo: %c\nNivel de Combustível: %d\n",elem->codigo,elem->modo,elem->combustivel );
+        //printf("Aeronave: %s\nModo: %c\nNivel de Combustível: %d\n",elem->codigo,elem->modo,elem->combustivel );
       }
     }
   }
 
+  //For para verificar se deu alerta critico e aviao nao teve pista para pouso
+  for(elem = fila->ini; elem != NULL; elem = elem->prox){
+      if(elem->modo == 'A' && elem->countNoGas == 1){
+
+        elem->combustivel = elem->combustivel - 1;
+        //printf("Aeronaves SEM PISTA: %s\nModo: %c\nNivel de Combustível: %d\n",elem->codigo,elem->modo,elem->combustivel );
+      }
+  }
+
   int tamanhoFila = 0;
 
-  printf("\n ---------------------------------------------------------------------\n");
+  //printf("\n ---------------------------------------------------------------------\n");
   for(elem = fila->ini; elem != NULL; anterior = elem, elem = elem->prox){
 
     tamanhoFila++;
 
   }
-  printf("Antes do for:\n");
-  printf("Tamanho da fila: %d\n", tamanhoFila);
+  //printf("Antes do for:\n");
+  //printf("Tamanho da fila: %d\n", tamanhoFila);
 
   //Deletando da fila que ja pousou ou decolou
   for(elem = fila->ini; elem != NULL; anterior = elem, elem = elem->prox){
@@ -500,16 +511,16 @@ void decresce_combustivel(Fila *fila, int unidade_count){
       }
 
   }
-  tamanhoFila = 0;
-  printf("\n ---------------------------------------------------------------------\n");
-  for(elem = fila->ini; elem != NULL; anterior = elem, elem = elem->prox){
 
-    tamanhoFila++;
-
-  }
-  printf("Depois do for:\n");
-  printf("Tamanho da fila: %d\n", tamanhoFila);
-
+  // tamanhoFila = 0;
+  // printf("\n ---------------------------------------------------------------------\n");
+  // for(elem = fila->ini; elem != NULL; anterior = elem, elem = elem->prox){
+  //
+  //   tamanhoFila++;
+  //
+  // }
+  // printf("Depois do for:\n");
+  // printf("Tamanho da fila: %d\n", tamanhoFila);
 
 
 //Deletando os elementos que possuirem gasolina menos que 0
@@ -519,52 +530,25 @@ void decresce_combustivel(Fila *fila, int unidade_count){
         aux = elem;
         if(elem == fila->ini){
           fila->ini = elem->prox;
-          printf("\n !! ALERTA CRÍTICO, AERONAVE IRÁ CAIR !!\n");
+          printf("\n\n !! ALERTA CRÍTICO, AERONAVE IRÁ CAIR !!\n\n");
           free(aux);
         }
         //Se o elemento estiver no final da fila
          else if(elem->prox == NULL){
            anterior->prox = NULL;
            fila->fim = anterior;
-           printf("\n !! ALERTA CRÍTICO, AERONAVE IRÁ CAIR !!\n");
+           printf("\n\n !! ALERTA CRÍTICO, AERONAVE IRÁ CAIR !!\n\n");
            free(aux);
         }
         //se estiver no meio da fila
         else {
           anterior->prox = elem->prox;
-          printf("\n !! ALERTA CRÍTICO, AERONAVE IRÁ CAIR !!\n");
+          printf("\n\n !! ALERTA CRÍTICO, AERONAVE IRÁ CAIR !!\n\n");
           free(aux);
         }
       }
 
     }
-
-
-  //Deletando os elementos que Acionaram ALERTA CRITICO e nao tiveram pista para pouso
-    for(elem = fila->ini; elem != NULL; anterior = elem, elem = elem->prox){
-      if(elem->countNoGas == 1){
-          //Se o elemento for o primeiro da Fila
-          aux = elem;
-          if(elem == fila->ini){
-            fila->ini = elem->prox;
-            printf("\n !! ALERTA CRÍTICO, AERONAVE IRÁ CAIR !!\n");
-            free(aux);
-          }
-          //Se o elemento estiver no final da fila
-           else if(elem->prox == NULL){
-             anterior->prox = NULL;
-             fila->fim = anterior;
-             printf("\n !! ALERTA CRÍTICO, AERONAVE IRÁ CAIR !!\n");
-             free(aux);
-          }
-          //se estiver no meio da fila
-          else {
-            anterior->prox = elem->prox;
-            printf("\n !! ALERTA CRÍTICO, AERONAVE IRÁ CAIR !!\n");
-            free(aux);
-          }
-        }
-      }
 
 
 
@@ -626,8 +610,8 @@ void limparFila(Fila *fila){
     tamanhoFila++;
 
   }
-  printf("Antes do for:\n");
-  printf("Tamanho da fila: %d\n", tamanhoFila);
+  //printf("Antes do for:\n");
+  //printf("Tamanho da fila: %d\n", tamanhoFila);
 
   for(elem = fila->ini; elem != NULL; anterior = elem, elem = elem->prox){
 
@@ -654,14 +638,14 @@ void limparFila(Fila *fila){
 
   }
   tamanhoFila = 0;
-  printf("\n ---------------------------------------------------------------------\n");
+  //printf("\n ---------------------------------------------------------------------\n");
   for(elem = fila->ini; elem != NULL; anterior = elem, elem = elem->prox){
 
     tamanhoFila++;
 
   }
-  printf("Depois do for:\n");
-  printf("Tamanho da fila: %d\n", tamanhoFila);
+  //printf("Depois do for:\n");
+  //printf("Tamanho da fila: %d\n", tamanhoFila);
 
 }
 
