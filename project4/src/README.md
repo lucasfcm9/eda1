@@ -1,6 +1,6 @@
 ### **Projeto 4 de EDA1**
 
-Aeroporto de Brasília
+**Simulação de um Aeroporto com 3 pistas, sendo a primeira e a segunda pistas de pouso e decolagem e a terceira pista apenas de decolagem, exceto se houver alguma emergência.**
 
 Para compilar, utilize o GCC e digite na linha de comando:
 
