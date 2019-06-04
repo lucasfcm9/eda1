@@ -1,9 +1,3 @@
-/*
-   - Alunos: Lucas Fellipe Carvalho Moreira && Pedro Henrique Queiroz Miranda && Gabriel Davi Silva Pereira
-   - Matrículas: 16/0133394 && 15/0144474 && 17/0010341
-   - Disciplina: Estruturas de Dados 1
-   - Professor: Mateus Mendelson
-   */
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -148,7 +142,7 @@ int main()
                     if (pista3_ocupada[0] == false && pista2_ocupada[0] == true && pista1_ocupada[0] == true)
                     {
                         printf("\n-----------------------------------------------------------------\n");
-                        printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
+
                         printf("Código do voo: %s\n", atual->codigo);
                         pista3_ocupada[0] = true;
                         pista3_ocupada[1] = false;
@@ -164,7 +158,7 @@ int main()
                     {
 
                         printf("\n-----------------------------------------------------------------\n");
-                        printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
+
                         printf("Código do voo: %s\n", atual->codigo);
                         pista2_ocupada[0] = true;
                         pista2_ocupada[1] = false;
@@ -180,7 +174,7 @@ int main()
                     {
 
                         printf("\n-----------------------------------------------------------------\n");
-                        printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
+
                         printf("Código do voo: %s\n", atual->codigo);
                         pista1_ocupada[0] = true;
                         pista1_ocupada[1] = false;
@@ -206,7 +200,7 @@ int main()
                         {
 
                             printf("\n-----------------------------------------------------------------\n");
-                            printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
+
                             printf("Código do voo: %s\n", atual->codigo);
                             pista3_ocupada[0] = true;
                             pista3_ocupada[1] = false;
@@ -220,7 +214,7 @@ int main()
                         {
 
                             printf("\n-----------------------------------------------------------------\n");
-                            printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
+
                             printf("Código do voo: %s\n", atual->codigo);
                             pista3_ocupada[0] = true;
                             pista3_ocupada[1] = true;
@@ -237,7 +231,7 @@ int main()
                     {
 
                         printf("\n-----------------------------------------------------------------\n");
-                        printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
+
                         printf("Código do voo: %s\n", atual->codigo);
                         if (atual->modo == 'A')
                         {
@@ -262,7 +256,7 @@ int main()
                     {
 
                         printf("\n-----------------------------------------------------------------\n");
-                        printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
+
                         printf("Código do voo: %s\n", atual->codigo);
                         if (atual->modo == 'A')
                         {
@@ -283,7 +277,7 @@ int main()
                     }
                 }
             } // FIM DO FOR DE LISTAS //
-        }   // FIM DO if Temp >= 3 //
+        }     // FIM DO if Temp >= 3 //
         else if (temp > 0 && temp < 3)
         {
 
@@ -298,7 +292,7 @@ int main()
                     {
 
                         printf("\n-----------------------------------------------------------------\n");
-                        printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
+
                         printf("Código do voo: %s\n", atual->codigo);
                         pista3_ocupada[0] = true;
                         pista3_ocupada[1] = false;
@@ -312,7 +306,7 @@ int main()
                     {
 
                         printf("\n-----------------------------------------------------------------\n");
-                        printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
+
                         printf("Código do voo: %s\n", atual->codigo);
                         pista3_ocupada[0] = true;
                         pista3_ocupada[1] = true;
@@ -329,7 +323,7 @@ int main()
                 {
 
                     printf("\n-----------------------------------------------------------------\n");
-                    printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
+
                     printf("Código do voo: %s\n", atual->codigo);
                     if (atual->modo == 'A')
                     {
@@ -355,7 +349,6 @@ int main()
 
                     printf("\n-----------------------------------------------------------------\n");
 
-                    printf("%s\n%c\n%d", atual->codigo, atual->modo, atual->combustivel);
                     printf("Código do voo: %s\n", atual->codigo);
                     if (atual->modo == 'A')
                     {
@@ -375,7 +368,7 @@ int main()
                     atual->status = true;
                 }
             } // FIM DO FOR DE LISTAS //
-        }   // FIM DO if Temp < 3 //
+        }     // FIM DO if Temp < 3 //
 
         verificarPistas_verification = 0;
 
