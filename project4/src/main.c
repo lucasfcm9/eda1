@@ -104,10 +104,8 @@ int main(){
   for(atual = fila.ini; atual != NULL; atual = atual->prox){
     temp++;
   }
-   while(temp > 0){
+   while(temp > 1){
 
-     // printf("\n\n +++++++++++++++++ IMPRIME NO INICIO ++++++++++++++\n\n");
-     // imprime(&fila);
 
      temp = 0;
      for(atual = fila.ini; atual != NULL; atual = atual->prox){
@@ -135,7 +133,7 @@ int main(){
                     //VERIFICAR PISTA 3
                       if(pista3_ocupada[0] == false && pista2_ocupada[0] == true && pista1_ocupada[0] == true){
                           printf("\n-----------------------------------------------------------------\n");
-
+                          printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                           printf("Código do voo: %s\n", atual->codigo);
                           pista3_ocupada[0] = true;
                           pista3_ocupada[1] = false;
@@ -151,7 +149,7 @@ int main(){
                       if(pista2_ocupada[0] == false && pista1_ocupada[0] == true ){
 
                         printf("\n-----------------------------------------------------------------\n");
-
+                        printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                         printf("Código do voo: %s\n", atual->codigo);
                         pista2_ocupada[0] = true;
                         pista2_ocupada[1] = false;
@@ -166,7 +164,7 @@ int main(){
                       if(pista1_ocupada[0] == false){
 
                         printf("\n-----------------------------------------------------------------\n");
-
+                        printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                         printf("Código do voo: %s\n", atual->codigo);
                         pista1_ocupada[0] = true;
                         pista1_ocupada[1] = false;
@@ -188,7 +186,7 @@ int main(){
 
 
                         printf("\n-----------------------------------------------------------------\n");
-
+                        printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                         printf("Código do voo: %s\n", atual->codigo);
                         pista3_ocupada[0] = true;
                         pista3_ocupada[1] = false;
@@ -202,7 +200,7 @@ int main(){
                       else if(atual->modo == 'D'){
 
                         printf("\n-----------------------------------------------------------------\n");
-
+                        printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                         printf("Código do voo: %s\n", atual->codigo);
                         pista3_ocupada[0] = true;
                         pista3_ocupada[1] = true;
@@ -219,7 +217,7 @@ int main(){
                     if(pista2_ocupada[0] == false && pista1_ocupada[0] == true ){
 
                       printf("\n-----------------------------------------------------------------\n");
-
+                      printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                       printf("Código do voo: %s\n", atual->codigo);
                       if(atual->modo == 'A'){
                         pista2_ocupada[0] = true;
@@ -241,7 +239,7 @@ int main(){
                     if(pista1_ocupada[0] == false){
 
                       printf("\n-----------------------------------------------------------------\n");
-
+                      printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                       printf("Código do voo: %s\n", atual->codigo);
                       if(atual->modo == 'A'){
                         pista1_ocupada[0] = true;
@@ -274,7 +272,7 @@ int main(){
 
 
                            printf("\n-----------------------------------------------------------------\n");
-
+                           printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                            printf("Código do voo: %s\n", atual->codigo);
                            pista3_ocupada[0] = true;
                            pista3_ocupada[1] = false;
@@ -288,7 +286,7 @@ int main(){
                          else if(atual->modo == 'D'){
 
                            printf("\n-----------------------------------------------------------------\n");
-
+                           printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                            printf("Código do voo: %s\n", atual->codigo);
                            pista3_ocupada[0] = true;
                            pista3_ocupada[1] = true;
@@ -305,7 +303,7 @@ int main(){
                        if(pista2_ocupada[0] == false && pista1_ocupada[0] == true ){
 
                          printf("\n-----------------------------------------------------------------\n");
-
+                         printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                          printf("Código do voo: %s\n", atual->codigo);
                          if(atual->modo == 'A'){
                            pista2_ocupada[0] = true;
@@ -328,6 +326,7 @@ int main(){
 
                          printf("\n-----------------------------------------------------------------\n");
 
+                         printf("%s\n%c\n%d", atual->codigo,atual->modo,atual->combustivel);
                          printf("Código do voo: %s\n", atual->codigo);
                          if(atual->modo == 'A'){
                            pista1_ocupada[0] = true;
@@ -347,14 +346,6 @@ int main(){
                }// FIM DO FOR DE LISTAS //
            }// FIM DO if Temp < 3 //
 
-
-
-
-
-
-    //  printf("\n\n\n\nFORA DO FOR\n\n\n\n");
-       //  printf("\n\n $$$$$$$$$$$$$$$ APÓS O FOR LISTA WHILE $$$$$$$$$$$$$$$$$$4\n\n");
-      //  imprime(&fila);
         verificarPistas_verification = 0;
 
     //PISTA 1 COUNT:
@@ -455,7 +446,7 @@ int main(){
        MIN += 5;
      }
 
-     //printf("\n\nHORAS: %.2d:%.2d:00\n\n",HORAS, MIN);
+
      count ++;
      i = 0;
      d_combustivel++;
@@ -585,7 +576,7 @@ void imprime(Fila *fila){
 }
 
 void decresce_combustivel(Fila *fila, int unidade_count){
- // printf("Decresce\n");
+
   Lista_voo *elem;
   Lista_voo *anterior = NULL;
   Lista_voo *aux = NULL;
@@ -595,7 +586,6 @@ void decresce_combustivel(Fila *fila, int unidade_count){
       if(elem->modo == 'A'){
 
         elem->combustivel = elem->combustivel - 1;
-    //    printf("Aeronave: %s\nModo: %c\nNivel de Combustível: %d\n",elem->codigo,elem->modo,elem->combustivel );
       }
     }
   }
@@ -604,21 +594,9 @@ void decresce_combustivel(Fila *fila, int unidade_count){
   for(elem = fila->ini; elem != NULL; elem = elem->prox){
       if(elem->modo == 'A' && elem->countNoGas == 1 && elem->status == false){
         elem->combustivel = elem->combustivel - 1;
-      //  printf("Aeronaves SEM PISTA: %s\nModo: %c\nNivel de Combustível: %d\n",elem->codigo,elem->modo,elem->combustivel );
       }
   }
 
-  int tamanhoFila = 0;
-
-  // printf("\n -**----------------------- FILA TESTE ANTES --------------------------------------------------------------------**-\n");
-  // for(elem = fila->ini; elem != NULL; anterior = elem, elem = elem->prox){
-  //
-  //   tamanhoFila++;
-  //
-  // }
-  // printf("Antes do for:\n");
-  // printf("Tamanho da fila: %d\n", tamanhoFila);
-  //  imprime(fila);
 
   //Deletando da fila que ja pousou ou decolou
   for(elem = fila->ini; elem != NULL; anterior = elem, elem = elem->prox){
@@ -678,20 +656,6 @@ void decresce_combustivel(Fila *fila, int unidade_count){
 
     }
 
-
-    // tamanhoFila = 0;
-    // printf("\n -**----------------------- FILA TESTE DEPOIS --------------------------------------------------------------------**-\n");
-    // for(elem = fila->ini; elem != NULL; anterior = elem, elem = elem->prox){
-    //
-    //   tamanhoFila++;
-    //
-    // }
-    // printf("Depois do for:\n");
-    // printf("Tamanho da fila: %d\n", tamanhoFila);
-    // if(tamanhoFila == 0){
-    //   return;
-    // }
-    // imprime(fila);
 
   //ordenando a lista após deletagem, onde os que possuirem 0 como combustivel irao para o inicio
   for(elem = fila->ini, anterior = NULL; elem != NULL; anterior = elem, elem = elem->prox){
