@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 typedef struct lista_voo{
-  char codigo[6];
+  char codigo[7];
   char modo;
   int combustivel;
   bool status;
