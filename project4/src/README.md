@@ -1,11 +1,11 @@
-### Projeto 4 de EDA1
+### **Projeto 4 de EDA1**
 
 Aeroporto de Brasília
 
 Para compilar, utilize o GCC e digite na linha de comando:
 
 ```
-gcc nome_do_arquivo.c -o main
+gcc aeroporto.c -o main
 ```
 
 E depois digite:
