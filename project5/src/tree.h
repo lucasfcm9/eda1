@@ -1,22 +1,38 @@
 #ifndef TREE_H
 #define TREE_H
 
-typedef struct _TREE
+typedef struct DATA
 {
-    int dt;
-    struct _TREE *left;
-    struct _TREE *right;
+    int info;
+    struct DATA *left;
+    struct DATA *right;
+} Data;
+
+typedef struct TREE
+{
+    Data *root;
+    unsigned int height;
+    bool empty;
+
 } Tree;
 
-Tree *loadTreeFromFile(const char *);
-void showTree(Tree *);
-bool isFull(Tree *);
-int searchValue(Tree *, int);
-int getHeigth(Tree *);
-void removeValue(Tree *, int);
-void printInOrder(Tree *);
-void printPreOrder(Tree *);
-void printPostOrder(Tree *);
-void balanceTree(Tree *);
+Data *newNode();
+Tree *newTree();
+Tree *createTree(Tree *, int *);
+Tree *loadTreeFromFile(char *);
+
+//Funções que o professor pediu
+
+// void searchValue(Data *, int, int, int);
+void getElement(Data *, int *, int *);
+void showTree(Data *);
+
+bool isFull(Data *);
+Data *removeValue(Data *, int);
+void printInOrder(Data *);
+void printPreOrder(Data *);
+void printPostOrder(Data *);
+int getHeigth(Data *);
+Tree *balanceTree(Tree *);
 
 #endif
