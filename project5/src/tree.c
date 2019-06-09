@@ -6,70 +6,116 @@
 
 #define Dt Data
 #define T Tree
-
+int COUNT = 10;
 Dt *newNode()
 {
-    Dt *newNode = (Dt *)calloc(1, sizeof(Dt));
-    if(newNode == NULL)
-        return NULL;
-    else
+    Dt *newNode = (Dt *)malloc(sizeof(Dt));
+    if(newNode == NULL){
+        printf("Error\n");
+        return  NULL;
+        exit(-1);
+    }else
         return newNode;
 }
 
 T *newTree()
 {
-    T *newTree = (T *)calloc(1, sizeof(T));
+    T *newTree = (T *)malloc(sizeof(T));
     if(newTree == NULL)
         return NULL;
     else
         return newTree;
 }
 
-T *createTree(T *tree, int *n)
+void createTree(T **tree, int *n)
+//{42,16,57,48,63,35,8,11,5}
 {
-    T *element = newTree();
-    if(element == NULL) //Se a árvore não foi alocada
-        return NULL;
-
-    //Raíz nula
-    if(tree->root == NULL)
-    {
-        tree->root = newNode();
-    if(tree->root == NULL)
-        return NULL'
-
-    tree->root->info = *n;
-    return tree;
-    }
-    else //Caso a raíz não seja nula;
-    {
-        if(*n > tree->root->info)
-        {
-            element->root = tree->root->right;
-            element = createTree(element, n);
-            tree->root->right = element->root;
-            return tree;
-        } //Se n(Valor) for maior que a raiz(O valor vai para a direita)
-        else
-        {
-            element->root = tree->root->left;
-            element = createTree(element, n);
-            tree->root->left = element->root;
-            return tree; //Caso ao contrário, o valor vai para a esquerda
+  for(int i = 0; i < sizeof(n)/sizeof(int); i++){
+    Dt *elem = newNode();
+    elem->info = *(n+i);
+    if((*tree)->root == NULL){
+      elem->right = NULL;
+      elem->left = NULL;
+      (*tree)->root = elem;
+      (*tree)->height = 1;
+      (*tree)->empty = false;
+    } else if(*(n+i) > (*tree)->root->info){
+      if((*tree)->root->right == NULL){
+        printf("ENTREI NO IF DO ROOT A DIREITA\n");
+        (*tree)->root->right = elem;
+        elem->right = NULL;
+        elem->left = NULL;
+      } else {
+        Dt *aux = (*tree)->root->right;
+        while(1){
+          if((*n+i) > aux->info){
+            if(aux->right == NULL){
+              aux->right = elem;
+              elem->right = NULL;
+              elem->left = NULL;
+              break;
+            }else{
+              aux = aux->right;
+            }
+          }else{
+              if(aux->left == NULL){
+                aux->left = elem;
+                elem->right = NULL;
+                elem->left = NULL;
+                break;
+              }else{
+                aux = aux->left;
+              }
+          }
         }
+      }
+    }else{
+      if((*tree)->root->left == NULL){
+        (*tree)->root->left = elem;
+        elem->right = NULL;
+        elem->left = NULL;
+      } else {
+        Dt *aux = (*tree)->root->left;
+        while(1){
+          if((*n+i) > aux->info){
+            if(aux->right == NULL){
+              aux->right = elem;
+              elem->right = NULL;
+              elem->left = NULL;
+              break;
+            }else{
+              aux = aux->right;
+            }
+          }else{
+              if(aux->left == NULL){
+                aux->left = elem;
+                elem->right = NULL;
+                elem->left = NULL;
+                break;
+              }else{
+                aux = aux->left;
+              }
+          }
+        }
+      }
     }
+  }
 }
 
 T *loadTreeFromFile(char *fp)
 {
-    T *tree;
-    tree = newTree();
+    // T *tree;
+    // tree = newTree();
+    //
+    // if(tree == NULL)
+    //     return NULL;
+    //
+    // FILE *fp = fopen(fp, "r");
+    //
+    // if(fp == NULL)
+    //     return NULL;
+}
 
-    if(tree == NULL)
-        return NULL;
-
-    FILE *fp = fopen(fp, "r");
-
-    if(fp == NULL)
-        return NULL;
+  void printTree(Dt* root, int space){
+  printf("%d\n", root->info );
 }

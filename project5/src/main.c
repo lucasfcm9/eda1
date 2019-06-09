@@ -5,24 +5,27 @@
 
 int main()
 {
+    int tree_elements[] = {42,16,57,48,63,35,8,11,5};
     int op;
-
-    do
-    {
-        printf("1 - Carregar árvore a partir de um arquivo\n");
-        printf("2 - Mostrar árvore binária\n");
-        printf("3 - Imprimir na tela se a árvore está cheia ou não\n");
-        printf("4 - Buscar valor na árvore binária\n");
-        printf("5 - Imprimir na tela a altura da árvore\n");
-        printf("6 - Remover valor da árvore binária\n");
-        printf("7 - Printar árvore InOrder\n");
-        printf("8 - Printar árvore PreOrder\n");
-        printf("9 - Printar árvore PostOrder\n");
-        printf("10 - Balancear árvore\n\n");
-
-        printf("Digite sua opção, por favor: ");
-        scanf("%d", &op);
-        system("clear");
+    Tree *tree = newTree();
+    createTree(&tree, tree_elements);
+    printTree(tree->root, 0);
+    // do
+    // {
+    //     printf("1 - Carregar árvore a partir de um arquivo\n");
+    //     printf("2 - Mostrar árvore binária\n");
+    //     printf("3 - Imprimir na tela se a árvore está cheia ou não\n");
+    //     printf("4 - Buscar valor na árvore binária\n");
+    //     printf("5 - Imprimir na tela a altura da árvore\n");
+    //     printf("6 - Remover valor da árvore binária\n");
+    //     printf("7 - Printar árvore InOrder\n");
+    //     printf("8 - Printar árvore PreOrder\n");
+    //     printf("9 - Printar árvore PostOrder\n");
+    //     printf("10 - Balancear árvore\n\n");
+    //
+    //     printf("Digite sua opção, por favor: ");
+    //     scanf("%d", &op);
+    //     system("clear");
 
         // switch (op)
         // {
@@ -61,6 +64,6 @@ int main()
         //     break;
         // }
 
-    } while (op);
+    // } while (op);
     return 0;
 }

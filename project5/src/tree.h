@@ -18,7 +18,7 @@ typedef struct TREE
 
 Data *newNode();
 Tree *newTree();
-Tree *createTree(Tree *, int *);
+void createTree(Tree **, int *);
 Tree *loadTreeFromFile(char *);
 
 //Funções que o professor pediu
@@ -34,5 +34,6 @@ void printPreOrder(Data *);
 void printPostOrder(Data *);
 int getHeigth(Data *);
 Tree *balanceTree(Tree *);
+void printTree(Data* ,int);
 
 #endif
