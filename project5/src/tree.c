@@ -162,3 +162,36 @@ void isFull(T *tree){
     printf("árvore não é cheia\n");
   }
 }
+
+void searchValue(Data *root, int value){
+  Data *aux = root;
+  Data *aux2 = root;
+  int knot_level = 1;
+  while(aux != NULL){
+    if(value == aux->info){
+      if(knot_level == 1) {
+        printf("nível do nó encontrado: %d\n",knot_level);
+        return;
+      }
+      printf("nível do nó encontrado: %d\n",knot_level);
+      printf("Valor do pai %d\n", aux2->info);
+      if(aux2->info < aux->info){
+        if(aux2->left != NULL)
+          printf("Valor do irmão %d\n",aux2->left->info);
+      }else if(aux2->info > aux->info){
+        if(aux2->right != NULL)
+          printf("Valor do irmão %d\n",aux2->right->info);
+      }
+      return;
+    }else if(value > aux->info){
+      aux2 = aux;
+      aux = aux -> right;
+      knot_level++;
+    }else{
+      aux2 = aux;
+      aux = aux -> left;
+      knot_level++;
+    }
+  }
+  printf("Valor não encontrado\n");
+}

@@ -24,7 +24,7 @@ Tree *loadTreeFromFile(char *);
 
 //Funções que o professor pediu
 
-// void searchValue(Data *, int, int, int);
+ void searchValue(Data *, int);
 void getElement(Data *, int *, int *);
 void showTree(Data *);
 

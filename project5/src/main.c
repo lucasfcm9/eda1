@@ -12,6 +12,7 @@ int main()
     printf("altura %d\n", tree->height);
     printTree(tree->root, 0);
     isFull(tree);
+    searchValue(tree->root, 42);
     // do
     // {
     //     printf("1 - Carregar árvore a partir de um arquivo\n");
