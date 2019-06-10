@@ -9,6 +9,7 @@ int main()
     int op;
     Tree *tree = newTree();
     createTree(&tree, tree_elements);
+    printf("altura %d\n", tree->height);
     printTree(tree->root, 0);
     // do
     // {
