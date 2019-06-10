@@ -13,6 +13,7 @@ typedef struct TREE
     Data *root;
     unsigned int height;
     bool empty;
+    bool isFull;
 
 } Tree;
 
@@ -27,7 +28,7 @@ Tree *loadTreeFromFile(char *);
 void getElement(Data *, int *, int *);
 void showTree(Data *);
 
-bool isFull(Data *);
+void isFull(Tree *);
 Data *removeValue(Data *, int);
 void printInOrder(Data *);
 void printPreOrder(Data *);

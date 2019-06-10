@@ -11,6 +11,7 @@ int main()
     createTree(&tree, tree_elements);
     printf("altura %d\n", tree->height);
     printTree(tree->root, 0);
+    isFull(tree);
     // do
     // {
     //     printf("1 - Carregar árvore a partir de um arquivo\n");

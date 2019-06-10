@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
+#include <math.h>
 #include "tree.h"
 
 #define Dt Data
@@ -30,6 +30,7 @@ T *newTree()
 void createTree(T **tree, int *n)
 //{42,16,57,48,63,35,8,11,5}
 {
+  int isfull = 0;
   for(int i = 0; i < 9; i++){
     Dt *elem = newNode();
     elem->info = *(n+i);
@@ -67,7 +68,13 @@ void createTree(T **tree, int *n)
                 j++;
               }
           }
-          (*tree)->height = j;
+
+          if(j>(*tree)->height){
+            (*tree)->height = j;
+            isfull = 0;
+          }
+          if(j == (*tree)->height)
+            isfull++;
         }
       }
     }else{
@@ -101,10 +108,21 @@ void createTree(T **tree, int *n)
               }
           }
         }
-        (*tree)->height = j;
+
+        if(j>(*tree)->height){
+          (*tree)->height = j;
+          isfull = 0;
+        }
+        if(j == (*tree)->height)
+          isfull++;
       }
     }
   }
+
+  if(pow(2,(*tree)->height - 1) == isfull)
+    (*tree)->isFull = true;
+  else
+    (*tree)->isFull = false;
 }
 
 T *loadTreeFromFile(char *fp)
@@ -138,13 +156,9 @@ T *loadTreeFromFile(char *fp)
 }
 
 void isFull(T *tree){
-  Dt *aux = tree->root;
-  int j = 0;
-  while(1){
-    if(j == (tree->height -1)){
-
-    }else{
-      aux = aux -> left
-    }
+  if(tree->isFull){
+    printf("árvore é cheia\n");
+  }else{
+    printf("árvore não é cheia\n");
   }
 }
