@@ -163,7 +163,7 @@ void isFull(T *tree){
   }
 }
 
-void searchValue(Data *root, int value){
+void searchValue(Dt *root, int value){
   Data *aux = root;
   Data *aux2 = root;
   int knot_level = 1;
@@ -194,4 +194,40 @@ void searchValue(Data *root, int value){
     }
   }
   printf("Valor não encontrado\n");
+}
+
+void printInOrder(Dt *root)
+{
+    if(root == NULL)
+        return ;
+    else
+    {
+        printInOrder(root->left);
+        printf("%d ", root->info);
+        printInOrder(root->right);
+    }
+}
+
+void printPostOrder(Dt *root)
+{
+    if(root == NULL)
+        return;
+    else
+    {
+        printPostOrder(root->left);
+        printPostOrder(root->right);
+        printf("%d ", root->info);
+    }
+}
+
+void printPreOrder(Dt *root)
+{
+    if(root == NULL)
+        return;
+    else
+    {
+        printf("%d ", root->info);
+        printPreOrder(root->left);
+        printPreOrder(root->right);
+    }
 }
