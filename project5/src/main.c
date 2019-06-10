@@ -13,12 +13,15 @@ int main()
     printTree(tree->root, 0);
     isFull(tree);
     searchValue(tree->root, 42);
+    printf("Print in order\n\n");
     printInOrder(tree->root);
-    printf("\n");
+    printf("\n\n");
+    printf("Print post order\n\n");
     printPostOrder(tree->root);
-    printf("\n");
+    printf("\n\n");
+    printf("Print pre order\n\n");
     printPreOrder(tree->root);
-    printf("\n");
+    printf("\n\n");
     // do
     // {
     //     printf("1 - Carregar árvore a partir de um arquivo\n");
