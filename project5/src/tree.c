@@ -231,3 +231,83 @@ void printPreOrder(Dt *root)
         printPreOrder(root->right);
     }
 }
+
+void getHeigth(Tree *tree){
+  printf(" valor da altura %u\n", tree->height);
+}
+void removeValue(Data *root, int value){
+  Data *aux = root;
+  Data *aux2 = root;
+
+  while(aux != NULL){
+    if(value == aux->info){
+      //VALOR A SE DELETAR É FOLHA
+      if(aux->left == NULL && aux->right == NULL){
+        if(aux2->info > aux->info){
+          aux2->left = NULL;
+          free(aux);
+          return;
+        }else if(aux2->info < aux->info){
+          if(aux2->right != NULL)
+          aux2->right = NULL;
+          free(aux);
+          return;
+        }
+      }else if(aux->left == NULL || aux->right == NULL){
+        //VALOR A SE DELETAR TEM SÓ UM FILHO
+        printf("Ele só tem um filho!!");
+        if(aux2->info > aux-> info){
+          printf("Está a esquerda de seu pai!!");
+          if(aux->right == NULL){
+            aux2->left = aux->left;
+            free(aux);
+          } else {
+            aux2->left = aux->right;
+            free(aux);
+          }
+        }else{
+          printf("Está a direita de seu pai!!");
+          if(aux->right == NULL){
+            aux2->right = aux->left;
+            free(aux);
+            return;
+          } else {
+            aux2->right = aux->right;
+            free(aux);
+            return;
+          }
+        }
+      }else{
+        //REMOÇÃO PARA UM VALOR COM DOIS FILHOS
+        Data *aux3 = aux->right;
+        aux2 = aux;
+        while(aux3 != NULL){
+         if(aux3->right == NULL  && aux3->left == NULL){
+
+           aux->info = aux3->info;
+           if(aux2->info > aux3->info){
+             aux2->left = NULL;
+             free(aux3);
+           }else{
+             aux2->right = NULL;
+             free(aux3);
+           }
+           break;
+         } else{
+           aux2 = aux3;
+           aux3 = aux3->left;
+         }
+       }
+       return;
+      }
+
+    }else if(value > aux->info){
+      aux2 = aux;
+      aux = aux -> right;
+    }else{
+      aux2 = aux;
+      aux = aux -> left;
+    }
+  }
+  printf("Valor a ser removido não encontrado!!\n");
+}

@@ -29,11 +29,11 @@ void getElement(Data *, int *, int *);
 void showTree(Data *);
 
 void isFull(Tree *);
-Data *removeValue(Data *, int);
+void removeValue(Data *, int);
 void printInOrder(Data *);
 void printPreOrder(Data *);
 void printPostOrder(Data *);
-int getHeigth(Data *);
+void getHeigth(Tree *);
 Tree *balanceTree(Tree *);
 void printTree(Data* ,int);
 

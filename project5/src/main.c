@@ -22,6 +22,10 @@ int main()
     printf("Print pre order\n\n");
     printPreOrder(tree->root);
     printf("\n\n");
+    printf("Remove element\n\n");
+    removeValue(tree->root, 48);
+    printTree(tree->root, 0);
+    printf("\n\n");
     // do
     // {
     //     printf("1 - Carregar árvore a partir de um arquivo\n");
