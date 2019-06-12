@@ -211,11 +211,11 @@ void isFull(T *tree)
 {
     if (tree->isFull)
     {
-        printf("árvore é cheia\n");
+        printf("Árvore é cheia\n\n");
     }
     else
     {
-        printf("árvore não é cheia\n");
+        printf("Árvore não é cheia\n");
     }
 }
 
