@@ -8,11 +8,12 @@ int main()
     int tree_elements[] = {42,16,57,48,63,35,8,11,5};
     int op;
     Tree *tree = newTree();
-    createTree(&tree, tree_elements);
+    int *s = loadTreeFromFile("in.txt");
+    createTree(&tree, s);
     printf("altura %d\n", tree->height);
     printTree(tree->root, 0);
     isFull(tree);
-    searchValue(tree->root, 42);
+    searchValue(tree->root, 10);
     printf("Print in order\n\n");
     printInOrder(tree->root);
     printf("\n\n");
@@ -43,42 +44,42 @@ int main()
     //     scanf("%d", &op);
     //     system("clear");
 
-        // switch (op)
-        // {
-        // case 1:
-        //     loadTreeFromFile();
-        //     break;
-        // case 2:
-        //     showTree();
-        //     break;
-        // case 3:
-        //     isFull();
-        //     break;
-        // case 4:
-        //     searchValue();
-        //     break;
-        // case 5:
-        //     getHeigth();
-        //     break;
-        // case 6:
-        //     removeValue();
-        //     break;
-        // case 7:
-        //     printInOrder();
-        //     break;
-        // case 8:
-        //     printPreOrder();
-        //     break;
-        // case 9:
-        //     printPostOrder();
-        //     break;
-        // case 10:
-        //     balanceTree();
-        //     break;
-        // default:
-        //     printf("Digite uma opção válida, por favor!");
-        //     break;
-        // }
+    // switch (op)
+    // {
+    // case 1:
+    //     loadTreeFromFile();
+    //     break;
+    // case 2:
+    //     showTree();
+    //     break;
+    // case 3:
+    //     isFull();
+    //     break;
+    // case 4:
+    //     searchValue();
+    //     break;
+    // case 5:
+    //     getHeigth();
+    //     break;
+    // case 6:
+    //     removeValue();
+    //     break;
+    // case 7:
+    //     printInOrder();
+    //     break;
+    // case 8:
+    //     printPreOrder();
+    //     break;
+    // case 9:
+    //     printPostOrder();
+    //     break;
+    // case 10:
+    //     balanceTree();
+    //     break;
+    // default:
+    //     printf("Digite uma opção válida, por favor!");
+    //     break;
+    // }
 
     // } while (op);
     return 0;
