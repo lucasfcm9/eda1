@@ -5,7 +5,7 @@
 
 
 #include "tree.h"
-#define path "../BSTs/"
+#define path "BSTs/"
 
 
 int main()
@@ -19,7 +19,7 @@ int main()
     do
     {
         printf("1 - Carregar árvore a partir de um arquivo\n\n");
-        printf("\tOpções:\n\ttbst1.txt\n\ttbst2.txt\n\ttbst3.txt\n\ttbst4.txt\n\ttbst5.txt\n\ttbst6.txt\n\n");
+        printf("\tOpções:\n\tbst1.txt\n\tbst2.txt\n\tbst3.txt\n\tbst4.txt\n\tbst5.txt\n\tbst6.txt\n\n");
         printf("2 - Mostrar árvore binária\n");
         printf("3 - Imprimir na tela se a árvore está cheia ou não\n");
         printf("4 - Buscar valor na árvore binária\n");
@@ -36,9 +36,11 @@ int main()
     switch (op)
     {
         case 1:
+            printf("Digite o nome do arquivo:\n");
             scanf("%s[^\n]", fp);
             strcpy(full_path, path);
             strcat(full_path, fp);
+            printf("%s\n", full_path );
             loadTreeFromFile(full_path, &tree);
             break;
         case 2:
