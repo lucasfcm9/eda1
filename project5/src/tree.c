@@ -184,6 +184,7 @@ void *loadTreeFromFile(char *fp, T **tree)
     } while (!feof(archive));
     createTree(tree, vector, count);
     fclose(archive);
+    return 0;
 }
 
 void printTree(Dt *root, int space)
@@ -300,6 +301,7 @@ void getHeigth(T *tree)
 {
     printf("Valor da altura: %u\n", tree->height);
 }
+
 void removeValue(Dt *root, int value)
 {
     Data *aux = root;
