@@ -29,10 +29,10 @@ T *newTree()
         return newTree;
 }
 
-void createTree(T **tree, int *n)
+void createTree(T **tree, int *n, int size)
 {
     int isfull = 0;
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < size; i++)
     {
         Dt *elem = newNode();
         elem->info = *(n + i);
@@ -160,10 +160,8 @@ void createTree(T **tree, int *n)
         (*tree)->isFull = false;
 }
 
-int *loadTreeFromFile(char *fp)
+void *loadTreeFromFile(char *fp, T **tree)
 {
-    T *tree;
-    tree = newTree();
     int *vector;
 
     vector = (int *)malloc(1000 * sizeof(int));
@@ -182,11 +180,10 @@ int *loadTreeFromFile(char *fp)
     {
         fscanf(archive, "%d ", &number);
         vector[count++] = number;
-        createTree(&tree, vector);
 
     } while (!feof(archive));
+    createTree(tree, vector, count);
     fclose(archive);
-    return vector;
 }
 
 void printTree(Dt *root, int space)

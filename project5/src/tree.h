@@ -19,8 +19,8 @@ typedef struct TREE
 
 Data *newNode();
 Tree *newTree();
-void createTree(Tree **, int *);
-int *loadTreeFromFile(char *);
+void createTree(Tree **, int *, int);
+void *loadTreeFromFile(char *, Tree**);
 
 //Funções que o professor pediu
 

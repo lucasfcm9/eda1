@@ -8,8 +8,7 @@ int main()
     int tree_elements[] = {42,16,57,48,63,35,8,11,5};
     int op;
     Tree *tree = newTree();
-    int *s = loadTreeFromFile("in.txt");
-    createTree(&tree, s);
+    loadTreeFromFile("in.txt", &tree);
     printf("altura %d\n", tree->height);
     printTree(tree->root, 0);
     isFull(tree);
