@@ -20,7 +20,7 @@ typedef struct TREE
 Data *newNode();
 Tree *newTree();
 void createTree(Tree **, int *);
-Tree *loadTreeFromFile(char *);
+int *loadTreeFromFile(char *);
 
 //Funções que o professor pediu
 

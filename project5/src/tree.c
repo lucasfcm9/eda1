@@ -32,7 +32,7 @@ T *newTree()
 void createTree(T **tree, int *n)
 {
     int isfull = 0;
-    for (int i = 0; i < sizeof(n) / sizeof(int); i++)
+    for (int i = 0; i < 10; i++)
     {
         Dt *elem = newNode();
         elem->info = *(n + i);
@@ -160,7 +160,7 @@ void createTree(T **tree, int *n)
         (*tree)->isFull = false;
 }
 
-T *loadTreeFromFile(char *fp)
+int *loadTreeFromFile(char *fp)
 {
     T *tree;
     tree = newTree();
