@@ -189,22 +189,25 @@ void *loadTreeFromFile(char *fp, T **tree)
     return 0;
 }
 
-void printTree(Dt *root, int space)
-{
-    if (root == NULL)
-    {
-        return;
-    }
-    space += COUNT;
+void whiteSpace ( char ch, int n ){
+  int i;
+  
+  for ( i = 0; i < n; i++ )
+    putchar ( ch );
+}
 
-    printTree(root->right, space);
-
-    printf("\n");
-    for (int i = COUNT; i < space; i++)
-        printf(" ");
-    printf("%d\n", root->info);
-
-    printTree(root->left, space);
+void printTree (Dt *root, int nivel){
+  int i;
+  
+  if ( root == NULL ) {
+    whiteSpace ( '\t', nivel);
+    puts ( "NULL" );
+  } else {
+    printTree ( root->right, nivel+ 1 );
+    whiteSpace ( '\t', nivel);
+    printf ( "%d\n", root->info );
+    printTree ( root->left, nivel+ 1 );
+  }
 }
 
 void isFull(T *tree)
@@ -437,6 +440,8 @@ Dt *leftRotation(Dt *avo, Dt *pai, Dt *filho, Dt *root)
             avo->right = filho;
 
     }
+
+    
     if (pai == root)
         root = filho;
 

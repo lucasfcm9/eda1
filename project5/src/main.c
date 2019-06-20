@@ -73,11 +73,13 @@ int main()
                 printPostOrder(tree->root);
                 break;
             case 10:
+                 
+                balanceTree(tree);
+                printTree(tree->root, 0);
                 if(tree->root)
                 {
                     balanced = isBalanced(tree->root);
-                    printf("%d\n", balanced);
-                    if(!balanced)
+                    if(balanced)
                     {
                         tree = balanceTree(tree);
                         printf("Árvore balanceada!\n");

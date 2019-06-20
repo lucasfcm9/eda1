@@ -27,7 +27,7 @@ void *loadTreeFromFile(char *, Tree**);
 void searchValue(Data *, int);
 void getElement(Data *, int *, int *);
 void showTree(Data *);
-
+void whiteSpace( char, int );
 void isFull(Tree *);
 void removeValue(Data *, int);
 void printInOrder(Data *);
