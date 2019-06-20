@@ -73,14 +73,16 @@ int main()
         case 10:
 
             // balanceTree(tree);
-            printTree(tree->root, 0);
+            
             if (tree->root)
             {
                 balanced = isBalanced(tree->root);
                 if (!balanced)
                 {
                     tree = balanceTree(tree);
-                    printf("A árvore agora está balanceada!\n");
+                    printf("\n");
+                    printTree(tree->root, 0);
+                    printf("\nA árvore agora está balanceada!\n");
                 }
                 else
                 {
