@@ -15,6 +15,7 @@ int main()
     char full_path[25];
     int number;
     int n;
+    int balanced;
     Tree *tree = newTree();
     do
     {
@@ -33,51 +34,65 @@ int main()
         printf("Digite sua opção, por favor: ");
         scanf("%d", &op);
 
-    switch (op)
-    {
-        case 1:
-            printf("Digite o nome do arquivo:\n");
-            scanf("%s[^\n]", fp);
-            strcpy(full_path, path);
-            strcat(full_path, fp);
-            printf("%s\n", full_path );
-            loadTreeFromFile(full_path, &tree);
-            break;
-        case 2:
-            printTree(tree->root, 0);
-            break;
-        case 3:
-            isFull(tree);
-            break;
-        case 4:
-            printf("Digite o valor a ser procurado na árvore:\n");
-            scanf("%d", &number);
-            searchValue(tree->root, number);
-            break;
-        case 5:
-            getHeigth(tree);
-            break;
-        case 6:
-            printf("Digite o valor que quer remover da árvore:\n");
-            scanf("%d", &n);
-            removeValue(tree->root, n);
-            break;
-        case 7:
-            printInOrder(tree->root);
-            break;
-        case 8:
-            printPreOrder(tree->root);
-            break;
-        case 9:
-            printPostOrder(tree->root);
-            break;
-        // case 10:
-        //     balanceTree();
-        //     break;
-        default:
-            printf("Digite uma opção válida, por favor!");
-            break;
-    }
+        switch (op)
+        {
+            case 1:
+                printf("Digite o nome do arquivo:\n");
+                scanf("%s[^\n]", fp);
+                strcpy(full_path, path);
+                strcat(full_path, fp);
+                printf("%s\n", full_path );
+                loadTreeFromFile(full_path, &tree);
+                break;
+            case 2:
+                printTree(tree->root, 0);
+                break;
+            case 3:
+                isFull(tree);
+                break;
+            case 4:
+                printf("Digite o valor a ser procurado na árvore:\n");
+                scanf("%d", &number);
+                searchValue(tree->root, number);
+                break;
+            case 5:
+                getHeigth(tree);
+                break;
+            case 6:
+                printf("Digite o valor que quer remover da árvore:\n");
+                scanf("%d", &n);
+                removeValue(tree->root, n);
+                break;
+            case 7:
+                printInOrder(tree->root);
+                break;
+            case 8:
+                printPreOrder(tree->root);
+                break;
+            case 9:
+                printPostOrder(tree->root);
+                break;
+            case 10:
+                if(tree->root)
+                {
+                    balanced = isBalanced(tree->root);
+                    printf("%d\n", balanced);
+                    if(!balanced)
+                    {
+                        tree = balanceTree(tree);
+                        printf("Árvore balanceada!\n");
+                    }
+                    else
+                    {
+                        printf("Árvore não balanceada!\n");
+                    }
+
+                }
+                break;
+            default:
+                printf("Digite uma opção válida, por favor!");
+                break;
+        }
 
     } while (op);
     return 0;

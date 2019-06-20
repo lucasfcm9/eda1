@@ -35,6 +35,13 @@ void printPreOrder(Data *);
 void printPostOrder(Data *);
 void getHeigth(Tree *);
 Tree *balanceTree(Tree *);
-void printTree(Data* ,int);
+void printTree(Data *, int);
+Data *leftRotation(Data *, Data *, Data *, Data *);
+Data *rightRotation(Data *, Data *, Data *);
+Tree *linearizarElementos(Tree *);
+Tree *balanceTree(Tree *);
+int isBalanced(Data *);
+int getHeight(Data *);
+int max(int, int);
 
 #endif
