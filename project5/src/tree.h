@@ -20,14 +20,12 @@ typedef struct TREE
 Data *newNode();
 Tree *newTree();
 void createTree(Tree **, int *, int);
-void *loadTreeFromFile(char *, Tree**);
-
-//Funções que o professor pediu
+void *loadTreeFromFile(char *, Tree **);
 
 void searchValue(Data *, int);
 void getElement(Data *, int *, int *);
 void showTree(Data *);
-void whiteSpace( char, int );
+void whiteSpace(char, int);
 void isFull(Tree *);
 void removeValue(Data *, int);
 void printInOrder(Data *);

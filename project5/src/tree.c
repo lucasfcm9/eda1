@@ -189,25 +189,30 @@ void *loadTreeFromFile(char *fp, T **tree)
     return 0;
 }
 
-void whiteSpace ( char ch, int n ){
-  int i;
-  
-  for ( i = 0; i < n; i++ )
-    putchar ( ch );
+void whiteSpace(char ch, int n)
+{
+    int i;
+
+    for (i = 0; i < n; i++)
+        putchar(ch);
 }
 
-void printTree (Dt *root, int nivel){
-  int i;
-  
-  if ( root == NULL ) {
-    whiteSpace ( '\t', nivel);
-    puts ( "NULL" );
-  } else {
-    printTree ( root->right, nivel+ 1 );
-    whiteSpace ( '\t', nivel);
-    printf ( "%d\n", root->info );
-    printTree ( root->left, nivel+ 1 );
-  }
+void printTree(Dt *root, int nivel)
+{
+    int i;
+
+    if (root == NULL)
+    {
+        whiteSpace('\t', nivel);
+        puts("NULL");
+    }
+    else
+    {
+        printTree(root->right, nivel + 1);
+        whiteSpace('\t', nivel);
+        printf("%d\n", root->info);
+        printTree(root->left, nivel + 1);
+    }
 }
 
 void isFull(T *tree)
@@ -417,15 +422,14 @@ void removeValue(Dt *root, int value)
 Dt *rightRotation(Dt *avo, Dt *pai, Dt *filho)
 {
 
-    if(avo != NULL)
-        avo->right = filho; 
+    if (avo != NULL)
+        avo->right = filho;
 
-    pai->left = filho->right; 
-    filho->right = pai; 
+    pai->left = filho->right;
+    filho->right = pai;
 
     return filho;
 }
-
 
 Dt *leftRotation(Dt *avo, Dt *pai, Dt *filho, Dt *root)
 {
@@ -434,14 +438,12 @@ Dt *leftRotation(Dt *avo, Dt *pai, Dt *filho, Dt *root)
 
     if (avo != NULL)
     {
-        if(avo->left == pai)
-            avo->left = filho; 
+        if (avo->left == pai)
+            avo->left = filho;
         else
             avo->right = filho;
-
     }
 
-    
     if (pai == root)
         root = filho;
 
@@ -463,12 +465,13 @@ T *linearizarElementos(T *tree)
         avo = tree->root;
         pai = tree->root->right;
 
-        while ((pai->left == NULL) && (pai->right !=NULL)) {
+        while ((pai->left == NULL) && (pai->right != NULL))
+        {
             avo = avo->right;
             pai = pai->right;
         }
 
-        while(pai->left != NULL)
+        while (pai->left != NULL)
         {
             pai = rightRotation(avo, pai, pai->left);
         }
@@ -476,10 +479,10 @@ T *linearizarElementos(T *tree)
     return tree;
 }
 
-T *balanceTree(T* tree)
+T *balanceTree(T *tree)
 {
     Dt *avo, *pai, *filho;
-    if(tree == NULL)
+    if (tree == NULL)
     {
         printf("Error, cannot allocate memory!\n");
         return NULL;
@@ -487,41 +490,39 @@ T *balanceTree(T* tree)
     else
     {
 
-        tree = linearizarElementos(tree); 
+        tree = linearizarElementos(tree);
 
-        while(!isBalanced(tree->root))
+        while (!isBalanced(tree->root))
         {
-            avo = tree->root; 
-            pai = tree->root; 
+            avo = tree->root;
+            pai = tree->root;
             filho = tree->root;
             if (pai != NULL)
-                filho = pai->right; 
+                filho = pai->right;
 
             if (filho != NULL)
                 tree->root = leftRotation(NULL, pai, filho, tree->root);
 
-            avo = pai; 
-            pai = filho; 
-            filho = pai->right; 
+            avo = pai;
+            pai = filho;
+            filho = pai->right;
 
-            while((pai != NULL) && !isBalanced(tree->root)) 
+            while ((pai != NULL) && !isBalanced(tree->root))
             {
-                avo = pai; 
-                pai = filho; 
-
-                if (pai != NULL)
-                    filho = pai->right; 
-
-                if(filho != NULL)
-                    tree->root = leftRotation(avo, pai, filho, tree->root);
-
-
                 avo = pai;
                 pai = filho;
 
                 if (pai != NULL)
                     filho = pai->right;
 
+                if (filho != NULL)
+                    tree->root = leftRotation(avo, pai, filho, tree->root);
+
+                avo = pai;
+                pai = filho;
+
+                if (pai != NULL)
+                    filho = pai->right;
             }
         }
     }
@@ -530,27 +531,29 @@ T *balanceTree(T* tree)
 
 int isBalanced(Dt *root)
 {
-    if(root == NULL) return 1; 
+    if (root == NULL)
+        return 1;
     else
     {
-        if(abs(getHeight(root->right) - getHeight(root->left)) > 1)
+        if (abs(getHeight(root->right) - getHeight(root->left)) > 1)
         {
-            return 0; 
+            return 0;
         }
-        else{
-            if(isBalanced(root->right)&&isBalanced(root->left))
+        else
+        {
+            if (isBalanced(root->right) && isBalanced(root->left))
             {
-                return 1; 
+                return 1;
             }
             else
-                return 0; 
+                return 0;
         }
     }
 }
 
 int getHeight(Dt *t)
 {
-    if(t == NULL)
+    if (t == NULL)
     {
         return -1;
     }
@@ -564,5 +567,3 @@ int max(int a, int b)
 {
     return (a > b) ? a : b;
 }
-
-
