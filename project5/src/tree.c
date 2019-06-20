@@ -1,3 +1,9 @@
+/*
+ - Alunos: Lucas Fellipe Carvalho Moreira && Pedro Henrique Queiroz Miranda && Gabriel Davi Silva Pereira
+ - Matrículas: 16/0133394 && 15/0144474 && 17/0010341
+ - Disciplina: Estruturas de Dados 1
+ - Professor: Mateus Mendelson
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -55,7 +61,7 @@ void createTree(T **tree, int *n, int size)
             else
             {
                 Dt *aux = (*tree)->root->left;
-                int j = 3;
+                unsigned int j = 3;
                 while (1)
                 {
                     if (*(n + i) < aux->info)
@@ -110,7 +116,7 @@ void createTree(T **tree, int *n, int size)
             else
             {
                 Dt *aux = (*tree)->root->right;
-                int j = 3;
+                unsigned int j = 3;
                 while (1)
                 {
                     if (*(n + i) < aux->info)
@@ -199,8 +205,6 @@ void whiteSpace(char ch, int n)
 
 void printTree(Dt *root, int nivel)
 {
-    int i;
-
     if (root == NULL)
     {
         whiteSpace('\t', nivel);
