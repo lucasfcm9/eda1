@@ -535,7 +535,7 @@ int isBalanced(Dt *root)
         return 1;
     else
     {
-        if (abs(getHeight(root->right) - getHeight(root->left)) > 1)
+        if (abs(getHeight2(root->right) - getHeight2(root->left)) > 1)
         {
             return 0;
         }
@@ -551,7 +551,7 @@ int isBalanced(Dt *root)
     }
 }
 
-int getHeight(Dt *t)
+int getHeight2(Dt *t)
 {
     if (t == NULL)
     {
@@ -559,7 +559,7 @@ int getHeight(Dt *t)
     }
     else
     {
-        return 1 + max(getHeight(t->left), getHeight(t->right));
+        return 1 + max(getHeight2(t->left), getHeight2(t->right));
     }
 }
 

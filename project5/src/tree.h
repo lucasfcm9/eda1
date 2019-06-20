@@ -39,7 +39,7 @@ Data *rightRotation(Data *, Data *, Data *);
 Tree *linearizarElementos(Tree *);
 Tree *balanceTree(Tree *);
 int isBalanced(Data *);
-int getHeight(Data *);
+int getHeight2(Data *);
 int max(int, int);
 
 #endif
