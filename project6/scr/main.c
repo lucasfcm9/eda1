@@ -1,254 +1,299 @@
+/* Alunos: Lucas Fellipe Carvalho Moreira && Pedro Henrique Queiroz Miranda && Gabriel Davi Silva Pereira
+
+   Matrículas: 16/0133394 && 150144474 && 17/0010341
+
+   Disciplina: Estruturas de Dados 1
+
+   Professor: Mateus Mendelson
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#define neuron_size 536
+#define quantidade_de_neuronios 536
 #define numero_de_imagens 100
 
-typedef struct _neuron{
+typedef struct _neuron
+{
   double *w;
   double bias;
-  double sum;
+  double somatorio;
   double s;
-}Neuron;
+} Neuron;
 
+void valores_aleatorios(Neuron *);
+void somatorio(Neuron *, double *, double);
+void funcao_logistica(Neuron *);
+double derivada_funcao_logistica(double *);
+void liberaAlocacao(Neuron *, Neuron *, Neuron *, double *, int);
+void taxa_de_aceitacao(Neuron *, Neuron *, Neuron *, double *, double *, double *, int);
 
-void randomValues(Neuron *);
-void sum(Neuron *, double *, double);
-void logistic_function(Neuron *);
-double d_dx_logistic_function(double *);
-void freeAlocation(Neuron *, Neuron *, Neuron *, double *, int );
-void finalRates(Neuron *, Neuron *, Neuron *,  double* , double *, double *, int );
-
-
-int main(int argc, char *argv[ ]){
+int main(int argc, char *argv[])
+{
   srand(time(NULL)); // Resetar o rand
 
-  int hidden_size = atoi(argv[1]); // Tamanho de elementos na camada oculta
+  int tamanho_da_camada = atoi(argv[1]); // Tamanho de elementos na camada oculta
 
-  double ent_exit[neuron_size];
-  double hidden_exit[hidden_size];
-  Neuron ent_layer[neuron_size];
-  Neuron hidden_layer[hidden_size];
-  Neuron final_layer;
+  double saida_da_primeira_camada[quantidade_de_neuronios];
+  double saida_da_camada_oculta[tamanho_da_camada];
+  Neuron camada_de_entrada[quantidade_de_neuronios];
+  Neuron camada_oculta[tamanho_da_camada];
+  Neuron camada_de_saida;
 
+  double **feature = (double **)calloc(numero_de_imagens, sizeof(double *));
 
-  double feature[536];
-  double number;
-  FILE *fp = fopen("vetores_normalizados.txt", "r"); //abertura Arquivo com vetor normalizado
-  /* For para leitura de arquivo */
-  for(int i = 0; i < 536; i++)
+  for (int i = 0; i < numero_de_imagens; i++)
   {
-    fscanf(fp, "%lf ", &number);
-    feature[i] = number;
+    feature[i] = (double *)calloc(quantidade_de_neuronios, sizeof(double));
+  }
+  FILE *fp = fopen("normalized_vectors.txt", "r"); //abertura Arquivo com vetor normalizado
+  for (int i = 0; i < numero_de_imagens; i++)
+  {
+    if (i < 50)
+      feature[i][0] = 1;
+    for (int j = 1; j < quantidade_de_neuronios + 1; j++)
+    {
+      fscanf(fp, "%lf", &feature[i][j]);
+    }
   }
 
-
-  double vetor_grama[numero_de_imagens/4][neuron_size+1];
-  double vetor_asfalto[numero_de_imagens/4][neuron_size+1];
+  double vetor_grama[numero_de_imagens / 4][quantidade_de_neuronios + 1];
+  double vetor_asfalto[numero_de_imagens / 4][quantidade_de_neuronios + 1];
   //CRIACAO ARRAY AUXILIAR COM NUMEROS ALEATORIOS DE 0 À 49.
-      int array[numero_de_imagens/2];
-        for(int i=0; i<numero_de_imagens/2; i++){
-        array[i] = i; //fill the array from 0 up to 49 -> 50 numbers
-    //printf("%d\n", array[i]);
-  }//end for array auxiliar
+  int array[numero_de_imagens / 2];
+  for (int i = 0; i < numero_de_imagens / 2; i++)
+  {
+    array[i] = i;
+  }
 
-  for(int i=0; i<numero_de_imagens/2; i++){
-      int temp = array[i];
-      int random_index = rand() % (numero_de_imagens/2); //random number from 0 up to 49
+  for (int i = 0; i < numero_de_imagens / 2; i++)
+  {
+    int temp = array[i];
+    int random_index = rand() % (numero_de_imagens / 2);
 
-      //printf("%d\n", random_index);
-      array[i] = array[random_index];
-      array[random_index] = temp;
-    }//end for embaralha array auxiliar
-    for(int i=0; i<(numero_de_imagens/4); i++){//pegar 25 de grama aleatorios p treino
-      for(int j=0; j<neuron_size + 1; j++){
-        vetor_grama[i][j] = feature[array[i]];//linha array[i] e um nuemro aleatorio de 0 a 49
-      }
-    }//end for pegar 25 de grama aleatorios p treino
-    for(int i=0; i<(numero_de_imagens/4); i++){//pegar 25 de asfalto aleatorios p treino
-      for(int j=0; j<neuron_size + 1; j++){
-        vetor_asfalto[i][j] = feature[array[i+(numero_de_imagens/4)]+(numero_de_imagens/2)];//linha array[i+(numero_de_imagens/4)]+(numero_de_imagens/2) e um numero aleatorio de 50 a 99
-      }
+    //printf("%d\n", random_index);
+    array[i] = array[random_index];
+    array[random_index] = temp;
+  }
+  for (int i = 0; i < (numero_de_imagens / 4); i++)
+  { //pegar 25 imagens de grama aleatorios p treino
+    for (int j = 0; j < quantidade_de_neuronios + 1; j++)
+    {
+      vetor_grama[i][j] = *feature[array[i]];
     }
-
-  double vetor_treino[numero_de_imagens/2][neuron_size + 1];
-  for(int i=0; i<(numero_de_imagens/2); i++){
-    for(int j=0; j< neuron_size + 1; j++){
-      if(i<25) vetor_treino[i][j] = vetor_grama[i][j];
-      else vetor_treino[i][j] = vetor_asfalto[i][j];
+  }
+  for (int i = 0; i < (numero_de_imagens / 4); i++)
+  { //pegar 25 imagens de asfalto aleatorios p treino
+    for (int j = 0; j < quantidade_de_neuronios + 1; j++)
+    {
+      vetor_asfalto[i][j] = *feature[array[i + (numero_de_imagens / 4)] + (numero_de_imagens / 2)];
     }
-  }//end for vetor_treino
+  }
 
+  double vetor_treino[numero_de_imagens / 2][quantidade_de_neuronios + 1];
+  for (int i = 0; i < (numero_de_imagens / 2); i++)
+  {
+    for (int j = 0; j < quantidade_de_neuronios + 1; j++)
+    {
+      if (i < 25)
+        vetor_treino[i][j] = vetor_grama[i][j];
+      else
+        vetor_treino[i][j] = vetor_asfalto[i][j];
+    }
+  }
 
   double *erros = (double *)calloc(numero_de_imagens, sizeof(double));
-  double erro_geral=1;
-  double limiar_do_erro_geral = 0.2;
-  int epocas=0;
+  double erro_geral = 1;
+  double limiar_erro_geral = 0.2;
+  int epocas = 0;
   double taxa_de_aprendizagem = 0.2;
   int count = 0;
-  int contador_de_erros=0;
+  int contador_de_erros = 0;
   double gradiente; //gradiente local para usar na backpropagation
 
-  while(epocas < 1000){
-      //linking each neuron to each other
-      for(int i = 0; i < neuron_size; i++){
-        randomValues(&ent_layer[i]);
-        sum(&ent_layer[i], feature, sizeof(feature)/sizeof(double));
-        ent_exit[i] = ent_layer[i].s;
-        //printf("Ent Layer %d: %.2lf\n", i, ent_layer[i].s);
+  while (epocas < 1000)
+  {
+    for (int i = 0; i < quantidade_de_neuronios; i++)
+    {
+      valores_aleatorios(&camada_de_entrada[i]);
+      somatorio(&camada_de_entrada[i], *feature, sizeof(feature) / sizeof(double));
+      saida_da_primeira_camada[i] = camada_de_entrada[i].s;
+      //printf("camada de entrada %d: %.2lf\n", i, camada_de_entrada[i].s);
+    }
+
+    for (int i = 0; i < tamanho_da_camada; i++)
+    {
+      valores_aleatorios(&camada_oculta[i]);
+      somatorio(&camada_oculta[i], saida_da_primeira_camada, sizeof(saida_da_primeira_camada) / sizeof(double));
+
+      saida_da_camada_oculta[i] = camada_oculta[i].s;
+    }
+
+    valores_aleatorios(&camada_de_saida);
+    somatorio(&camada_de_saida, saida_da_camada_oculta, sizeof(saida_da_primeira_camada) / sizeof(double));
+    //printf("camada final de saida: %.2lf\n", camada_de_saida.s);
+
+    if (contador_de_erros < (numero_de_imagens / 2))
+    {
+      erros[contador_de_erros] = (vetor_treino[array[count]][0] == 0) ? (camada_de_saida.s) : (1 - camada_de_saida.s);
+
+      printf("\t\t\t\t\tIniciando backpropagation %d period\n\n\n", epocas);
+      gradiente = derivada_funcao_logistica(&camada_de_saida.s) * erros[contador_de_erros];
+
+      for (int i = 0; i < tamanho_da_camada; i++)
+      {
+        camada_de_saida.w[i] = camada_de_saida.w[i] + taxa_de_aprendizagem * (camada_de_saida.s) * gradiente;
       }
 
-      for(int i = 0; i < hidden_size; i++){
-        randomValues(&hidden_layer[i]);
-        sum(&hidden_layer[i], ent_exit, sizeof(ent_exit)/sizeof(double));
-
-        hidden_exit[i] = hidden_layer[i].s;
+      camada_de_saida.bias = camada_de_saida.bias + taxa_de_aprendizagem * gradiente;
+      for (int i = 0; i < tamanho_da_camada; i++)
+      {
+        gradiente = derivada_funcao_logistica(&camada_de_saida.s) * gradiente * erros[contador_de_erros];
+        for (int j = 0; j < quantidade_de_neuronios; j++)
+        {
+          camada_oculta[i].w[j] = camada_oculta[i].w[j] + taxa_de_aprendizagem * (camada_de_saida.s) * gradiente;
+        }
+        camada_oculta[i].bias = camada_oculta[i].bias + taxa_de_aprendizagem * gradiente;
       }
 
-      randomValues(&final_layer);
-      sum(&final_layer, hidden_exit, sizeof(ent_exit)/sizeof(double));
-      //printf("final Layer saida: %.2lf\n", final_layer.s);
+      for (int i = 0; i < quantidade_de_neuronios; i++)
+      {
+        gradiente = derivada_funcao_logistica(&camada_de_saida.s) * gradiente * erros[contador_de_erros];
 
-      if(contador_de_erros<(numero_de_imagens/2)){
-        erros[contador_de_erros] = (vetor_treino[array[count]][0] == 0) ? (final_layer.s) : (1 - final_layer.s);
-
-        printf("BACKPROPAGATION initiating...%d period\n\n", epocas);
-        gradiente = d_dx_logistic_function(&final_layer.s)*erros[contador_de_erros];
-
-        for(int i=0; i<hidden_size; i++){
-          final_layer.w[i] = final_layer.w[i] + taxa_de_aprendizagem*(final_layer.s)*gradiente;
+        //updateWeight(&camada_de_entrada[i], camada_de_entrada[i].w,taxa_de_aprendizagem,camada_de_saida.s,gradiente);
+        for (int j = 0; j < quantidade_de_neuronios; j++)
+        {
+          camada_de_entrada[i].w[j] = camada_de_entrada[i].w[j] + taxa_de_aprendizagem * (camada_de_saida.s) * gradiente;
         }
 
-
-        final_layer.bias = final_layer.bias + taxa_de_aprendizagem*gradiente;
-        for(int i=0; i<hidden_size; i++){
-          gradiente = d_dx_logistic_function(&final_layer.s)*gradiente*erros[contador_de_erros];
-          for(int j=0; j<neuron_size; j++){
-            hidden_layer[i].w[j] = hidden_layer[i].w[j] + taxa_de_aprendizagem*(final_layer.s)*gradiente;
-          }
-          hidden_layer[i].bias = hidden_layer[i].bias + taxa_de_aprendizagem*gradiente;
-        }
-
-        for(int i=0; i<neuron_size; i++){
-          gradiente = d_dx_logistic_function(&final_layer.s)*gradiente*erros[contador_de_erros];
-
-
-          //updateWeight(&ent_layer[i], ent_layer[i].w,taxa_de_aprendizagem,final_layer.s,gradiente);
-          for(int j=0; j<neuron_size; j++){
-            ent_layer[i].w[j] = ent_layer[i].w[j] + taxa_de_aprendizagem*(final_layer.s)*gradiente;
-          }
-
-          ent_layer[i].bias = ent_layer[i].bias + taxa_de_aprendizagem*gradiente;
-        }
-
+        camada_de_entrada[i].bias = camada_de_entrada[i].bias + taxa_de_aprendizagem * gradiente;
       }
-    else {//calcular erro geral
+    }
+    else
+    { //calculando erro geral
       erro_geral = 0;
       contador_de_erros = 0;
-      for(int i=0; i<(numero_de_imagens/2); i++){
-        erro_geral += pow(erros[i],2);
-      }//erro geral
+      for (int i = 0; i < (numero_de_imagens / 2); i++)
+      {
+        erro_geral += pow(erros[i], 2);
+      }
       erro_geral /= 50.0;
-      printf("Accuracy on %d period was %.50lf\n\n", epocas, erro_geral);
+      printf("Accuracy on %d period was %.45lf\n\n", epocas, erro_geral);
     }
-    if(erro_geral<=limiar_do_erro_geral){
+    if (erro_geral <= limiar_erro_geral)
+    {
       break;
     }
     contador_de_erros++;
     epocas = epocas + 1;
     count++;
-    if(count > 50){
+    if (count > 50)
+    {
       count = 0;
     }
     printf("\n\n - - - -- - - - - - - - - - - ");
     printf("\nVALOR DO count: %d\n", count);
     printf("- - - -- - - - - - - - - - - \n\n");
-    if(epocas % 50 == 0) printf("%d periods already done\n\n", epocas);
-
+    if (epocas % 50 == 0)
+      printf("%d periodos prontos\n\n", epocas);
   }
 
-  printf("Training time : %d periods\n\nAccuracy reached : %.50lf\n\n", epocas, erro_geral);
-  //TESTING NEURAL NETWORK
-  printf("\n\nInitiating Neural Network ...\n\n\t\t********\n\n");
+  printf("Tempo de treinamento: %d periodos\n\n Precisao: %.45lf\n\n", epocas, erro_geral);
 
-  finalRates(ent_layer,hidden_layer, &final_layer, feature, ent_exit,   hidden_exit, hidden_size);
+  printf("---------------------------------------------------------------------\n\n\n");
 
-  freeAlocation(ent_layer, hidden_layer, &final_layer, erros, hidden_size);
+  taxa_de_aceitacao(camada_de_entrada, camada_oculta, &camada_de_saida, *feature, saida_da_primeira_camada, saida_da_camada_oculta, tamanho_da_camada);
+
+  liberaAlocacao(camada_de_entrada, camada_oculta, &camada_de_saida, erros, tamanho_da_camada);
   return 0;
 }
 
-void finalRates(Neuron *ent_layer, Neuron *hidden_layer, Neuron *final_layer,  double* feature, double *ent_exit, double *hidden_exit, int hidden_size){
+void taxa_de_aceitacao(Neuron *camada_de_entrada, Neuron *camada_oculta, Neuron *camada_de_saida, double *feature, double *saida_da_primeira_camada, double *saida_da_camada_oculta, int tamanho_da_camada)
+{
 
   double taxa_de_acerto = 0;
   double taxa_de_falsa_aceitacao = 0; // ASFALTOS CLASSIFICADOS COMO GRAMA.
-  double taxa_de_falsa_rejeicao = 0; // GRAMA CLASSIFICADOS COMO ASFALTO
+  double taxa_de_falsa_rejeicao = 0;  // GRAMA CLASSIFICADOS COMO ASFALTO
   int count = 0;
 
-  do{
+  do
+  {
     //enviar a entrada para a primeira camada e salvar os resultados
-    for(int i=0; i<neuron_size; i++){
+    for (int i = 0; i < quantidade_de_neuronios; i++)
+    {
       //printf("aqui first %d\n\n", i);
-      sum(&ent_layer[i], feature, neuron_size);
-      ent_exit[i]  = ent_layer[i].s;
+      somatorio(&camada_de_entrada[i], feature, quantidade_de_neuronios);
+      saida_da_primeira_camada[i] = camada_de_entrada[i].s;
     }
     //enviar os resultados anteriores para a camada escondida e salvar os novos resultados
-    for(int i=0; i< hidden_size; i++){
-      //printf("aqui second %d\n\n", i);
-      sum(&hidden_layer[i], ent_exit, hidden_size);
-      hidden_exit[i] = hidden_layer[i].s;
+    for (int i = 0; i < tamanho_da_camada; i++)
+    {
+      somatorio(&camada_oculta[i], saida_da_primeira_camada, tamanho_da_camada);
+      saida_da_camada_oculta[i] = camada_oculta[i].s;
     }
     //enviar os novos resultados para a ultima camada, calcular o erro e backpropagation
-    sum(final_layer, hidden_exit, sizeof(ent_exit)/sizeof(double));
-    if(feature[count] == 0){//asfalto
-      final_layer->s <= 0.5 ? (taxa_de_acerto++) : (taxa_de_falsa_aceitacao++);
-    }//end if asfalto
-    else{//else grama
-      final_layer->s > 0.5 ? (taxa_de_acerto++) : (taxa_de_falsa_rejeicao++);
-    }//end else grama
+    somatorio(camada_de_saida, saida_da_camada_oculta, sizeof(saida_da_primeira_camada) / sizeof(double));
+    if (feature[count] == 0)
+    { //asfalto
+      camada_de_saida->s <= 0.5 ? (taxa_de_acerto++) : (taxa_de_falsa_aceitacao++);
+    }
+    else
+    {
+      camada_de_saida->s > 0.5 ? (taxa_de_acerto++) : (taxa_de_falsa_rejeicao++);
+    }
 
     count++;
-  }while(count < numero_de_imagens);
-  printf("Número de neurônios na camada oculta: %d\n", hidden_size);
+  } while (count < numero_de_imagens);
+  printf("Número de neurônios na camada oculta: %d\n", tamanho_da_camada);
   printf("\n\n - - - - - - - - - - - - - - -\n\n");
-  printf("Taxa de acerto: %.3lf\n", taxa_de_acerto/100.0);
-  printf("Taxa de falsa rejeicao: %.3lf\n", taxa_de_falsa_rejeicao/100.0);
-  printf("Taxa de falsa aceitacao: %.3lf\n", taxa_de_falsa_aceitacao/100.0);
+  printf("Taxa de Acerto: %.3lf\n", taxa_de_acerto / 100.0);
+  printf("Taxa de Falsa Rejeição: %.3lf\n", taxa_de_falsa_rejeicao / 100.0);
+  printf("Taxa de Falsa Aceitação: %.3lf\n", taxa_de_falsa_aceitacao / 100.0);
 }
 
-void freeAlocation(Neuron *ent_layer, Neuron *hidden_layer, Neuron *final_layer, double *errors, int hidden_size){
-  for(int i=0; i<neuron_size; i++){
-    free(ent_layer[i].w);
-  }//liberando neuronios na primeira camada
-  for(int i=0; i<hidden_size; i++){
-    free(hidden_layer[i].w);
-  }//liberando neuronios camada oculta
-  free(final_layer->w);//liberando ultima camada
-  free(errors);//liberando vetor de erros
-
+void liberaAlocacao(Neuron *camada_de_entrada, Neuron *camada_oculta, Neuron *camada_de_saida, double *errors, int tamanho_da_camada)
+{
+  for (int i = 0; i < quantidade_de_neuronios; i++)
+  {
+    free(camada_de_entrada[i].w);
+  } //liberando neuronios na primeira camada
+  for (int i = 0; i < tamanho_da_camada; i++)
+  {
+    free(camada_oculta[i].w);
+  }                         //liberando neuronios camada oculta
+  free(camada_de_saida->w); //liberando ultima camada
+  free(errors);             //liberando vetor de erros
 }
 
-void randomValues(Neuron * neuron){
-  neuron->w= (double*)calloc(neuron_size, sizeof(double));
-  for(int i = 0; i < neuron_size; i++){
-      neuron->w[i] = (rand()%32767) - 16384;
+void valores_aleatorios(Neuron *neuron)
+{
+  neuron->w = (double *)calloc(quantidade_de_neuronios, sizeof(double));
+  for (int i = 0; i < quantidade_de_neuronios; i++)
+  {
+    neuron->w[i] = (rand() % 32767) - 16384;
   }
-  neuron->bias = (rand()%32767) - 16384;
+  neuron->bias = (rand() % 32767) - 16384;
 }
 
-void sum(Neuron * neuron, double * feature, double size){
-    neuron->sum = 0;
-    for(int i = 0; i < size; i++){
-      neuron->sum += neuron->w[i]*feature[i];
-    }
-    neuron->sum+=neuron->bias;
-    logistic_function(neuron);
+void somatorio(Neuron *neuron, double *feature, double size)
+{
+  neuron->somatorio = 0;
+  for (int i = 0; i < size; i++)
+  {
+    neuron->somatorio += neuron->w[i] * feature[i];
+  }
+  neuron->somatorio += neuron->bias;
+  funcao_logistica(neuron);
 }
 
-void logistic_function(Neuron * neuron){
-  neuron->s = 1.0/(1.0 + exp(-(neuron->sum)));
+void funcao_logistica(Neuron *neuron)
+{
+  neuron->s = 1.0 / (1.0 + exp(-(neuron->somatorio)));
 }
 
-double d_dx_logistic_function(double *value){//derivada da logistica
-  return exp(*value)/( pow( (exp(*value)+1) , 2) );//e^x / (e^x + 1)^2
-}//end of d_dx_logistic_function
+double derivada_funcao_logistica(double *value)
+{ //derivada da funcao logistica
+  return exp(*value) / (pow((exp(*value) + 1), 2));
+}
