@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
     {
       erros[contador_de_erros] = (vetor_treino[array[count]][0] == 0) ? (camada_de_saida.s) : (1 - camada_de_saida.s);
 
-      printf("\t\t\t\t\tIniciando backpropagation %d period\n\n\n", epocas);
+      printf("\t\tIniciando backpropagation %d Epoca\n\n\n", epocas);
       gradiente = derivada_funcao_logistica(&camada_de_saida.s) * erros[contador_de_erros];
 
       for (int i = 0; i < tamanho_da_camada; i++)
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
         erro_geral += pow(erros[i], 2);
       }
       erro_geral /= 50.0;
-      printf("Accuracy on %d period was %.45lf\n\n", epocas, erro_geral);
+      printf("Precisão em %d epoca é %.45lf\n\n", epocas, erro_geral);
     }
     if (erro_geral <= limiar_erro_geral)
     {
@@ -193,14 +193,11 @@ int main(int argc, char *argv[])
     {
       count = 0;
     }
-    printf("\n\n - - - -- - - - - - - - - - - ");
-    printf("\nVALOR DO count: %d\n", count);
-    printf("- - - -- - - - - - - - - - - \n\n");
     if (epocas % 50 == 0)
-      printf("%d periodos prontos\n\n", epocas);
+      printf("%d epocas prontas\n\n", epocas);
   }
 
-  printf("Tempo de treinamento: %d periodos\n\n Precisao: %.45lf\n\n", epocas, erro_geral);
+  printf("Tempo de treinamento: %d epocas\n\n Precisao: %.45lf\n\n", epocas, erro_geral);
 
   printf("---------------------------------------------------------------------\n\n\n");
 
