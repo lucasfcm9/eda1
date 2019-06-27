@@ -40,7 +40,7 @@ O arquivo normalized_vectors.txt foi gerado a partir do trabalho 2 de EDA1 na fu
 
 
 
-![VetorNormalizado](Screen Shot 2019-06-26 at 22.02.14)
+![VetorNormalizado](Vetores_normalizados.png)
 
 Ao final do treinamento, o número de épocas aparecerá, juntamente com a precisão, o número de neurônios na camada oculta, a taxa de acerto, a taxa de falsa rejeição e a taxa de falsa aceitação.
 
