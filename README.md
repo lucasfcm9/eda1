@@ -31,4 +31,20 @@
 - O projeto 4 consiste na implementação de um aeroporto com 3 pistas utilizando-se de filas juntamente com listas simplesmente encadeadas.
 
 
+#### Projeto 5
 
+- O projeto 5 consiste na implementação de uma árvore binária com as seguintes funcionalidades:
+    - 1 - Carregar árvore a partir de um arquivo;
+    - 2 - Mostrar árvore binária;
+    - 3 - Imprimir na tela se a árvore está cheia ou não;
+    - 4 - Buscar valor;
+    - 5 - Imprimir a altura da árvore;
+    - 6 - Remover valor;
+    - 7 - InOrder;
+    - 8 - PreOrder;
+    - 9 - PostOrder;
+    - 10 - Balancer árvore.
+
+#### Projeto 6
+
+- O projeto 6 consiste na criação de uma rede neural utilizando o projeto 2 como base.
