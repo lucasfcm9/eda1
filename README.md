@@ -62,6 +62,6 @@
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 
-#### Projeto 6/Project 6
+#### [Projeto 6](https://github.com/lucasfcm9/data-structures-1-2019/blob/master/project6/references/project6.pdf)/[Project 6](https://github.com/lucasfcm9/data-structures-1-2019/blob/master/project6/references/project6.pdf)
 
 <p align="justify"> &emsp;&emsp;O projeto 6 consiste na criação de uma rede neural utilizando o projeto 2 como base/Project 6 consists of creating a neural network using project 2 as the basis.</p>

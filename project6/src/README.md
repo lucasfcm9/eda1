@@ -34,19 +34,4 @@ E depois digite:
 
 Em que 'X' será o número de neurônios da camada oculta.
 
-
-
-O arquivo normalized_vectors.txt foi gerado a partir do trabalho 2 de EDA1 na função double *final_result_training(char f, int *random_numbers).
-
-
-
-![VetorNormalizado](Vetores_normalizados.png)
-
 Ao final do treinamento, o número de épocas aparecerá, juntamente com a precisão, o número de neurônios na camada oculta, a taxa de acerto, a taxa de falsa rejeição e a taxa de falsa aceitação.
-
-
-
-
-
-
-
