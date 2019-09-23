@@ -1,87 +1,36 @@
-/*  Alunos: Lucas Fellipe Carvalho Moreira && Pedro Henrique Queiroz Miranda
-    Matrícula: 16/0133394 && 15/0144474
+/*  Aluno: Lucas Fellipe Carvalho Moreira
+    Matrícula: 16/0133394
     Disciplina: Estruturas de dados 1
     Professor: Matheus Mendelson
 */
 
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 10
+#define print_double(array, length) \
+for(int i = 0; i < length; i++) \
+printf("%.3lf%s", array[i], (i+1 == length ? "\n" : " "));
+#define print_integer(array, length) \
+for(int i = 0; i < length; i++) \
+printf("%d%s", array[i], (i+1 == length ? "\n" : " "));
+#define read(array, length) \
+for(int i = 0; i < length; i++) \
+scanf("%lf", &array[i]);
+typedef double vector;
+#define FOR(x, n) \
+for(int i = 0; i < n; i++)
 
-void print(double *NOTAS, int size);
-int *recebe_notas(double *NOTAS, int size, int *APR);
-void conta_notas(int *apr, int size, int *approved, int *reproved);
-int percent_aprov(int *approved, int *reproved, double *percent_approved, double *percent_reproved);
-
-int main()
+typedef struct
 {
+    int approved;
+    int reproved;
+} Students;
 
-    int i;
-    double NOTAS[SIZE];
-    int APR[SIZE];
-
-    printf("Digite a nota dos 10 alunos: \n");
-
-    for (i = 0; i < SIZE; i++)
-    {
-        scanf("%lf", &NOTAS[i]);
-    }
-
-    print(NOTAS, SIZE);
-
-    int *x;
-    x = recebe_notas(NOTAS, SIZE, APR);
-
-    for (i = 0; i < SIZE; i++)
-    {
-        printf("Aluno %d: %d\n", i + 1, *(x + i));
-    }
-
-    int approved = 0, reproved = 0;
-    int *c;
-    conta_notas(x, SIZE, &approved, &reproved);
-
-    printf("Quantidade de alunos aprovados: %d\n", approved);
-    printf("Quantidade de alunos reprovados: %d\n", reproved);
-
-    double percent_approved = 0.0, percent_reproved = 0.0;
-
-    int z;
-    z = percent_aprov(&approved, &reproved, &percent_approved, &percent_reproved);
-
-    printf("A porcentagem de aprovados é: %.2lf%%\n", percent_approved);
-    printf("A porcentagem de reprovados é: %.2lf%%\n", percent_reproved);
-
-    if (z)
-    {
-        printf("Mais da metade da turma foi aprovada!\n");
-    }
-    else
-    {
-        printf("Menos da metade da turma foi aprovada!\n");
-    }
-
-    return 0;
-}
-
-void print(double *NOTAS, int size)
+int *received_notes(vector *NOTES, int n)
 {
-
-    int i;
-    for (i = 0; i < size; i++)
+    int *APR = malloc(sizeof(int) * 10);
+    FOR(0, n)
     {
-        printf("Nota do aluno %d = %.3lf\n", i + 1, *(NOTAS + i));
-    }
-}
-
-int *recebe_notas(double *NOTAS, int size, int *APR)
-{
-
-    int i;
-
-    for (i = 0; i < size; i++)
-    {
-        if (NOTAS[i] >= 6.0)
+        if(NOTES[i] >= 6.0)
             APR[i] = 1;
         else
             APR[i] = 0;
@@ -89,29 +38,53 @@ int *recebe_notas(double *NOTAS, int size, int *APR)
     return APR;
 }
 
-void conta_notas(int *apr, int size, int *approved, int *reproved)
+Students count_notes(int *APR, int n)
 {
+    Students s;
+    s.approved = 0;
+    s.reproved = 0;
 
-    int i;
-    for (i = 0; i < size; i++)
+    FOR(0, n)
     {
-        if (apr[i] == 1)
-            (*approved)++;
+        if(APR[i] == 1)
+            s.approved++;
         else
-            (*reproved)++;
+            s.reproved++;
     }
+    return s;
 }
 
-int percent_aprov(int *approved, int *reproved, double *percent_approved, double *percent_reproved)
+int percentage_approved(Students s)
 {
+    printf("Percentage of approved: %.3lf%%\n", ((double)(s.approved)/(10.0))*100.0);
+    printf("Percentage of reproved: %.3lf%%\n", ((double)(s.reproved)/(10.0))*100.0);
 
-    double t = *approved + *reproved;
-
-    *percent_approved = (double)(*approved / t) * 100.0;
-    *percent_reproved = (double)(*reproved / t) * 100.0;
-
-    if (*percent_approved >= 50.0)
+    if(((double)(s.approved)/(10.0)) > 51.0)
         return 1;
+    else
+        return 0;
+}
 
+int main()
+{
+    vector *NOTES;
+    Students s;
+    NOTES = malloc(sizeof(double) * 10);
+    printf("Input the 10 notes of your students:\n");
+    read(NOTES, 10);
+    print_double(NOTES, 10);
+
+    printf("Array with 0's and 1's. 1 indicate if student was approved and 0 reproved!\n");
+    print_integer(received_notes(NOTES, 10), 10);
+
+    printf("Number of students approved and reproved!\n");
+    s = count_notes(received_notes(NOTES, 10), 10);
+    printf("Approved: %d\n", s.approved);
+    printf("Reproved: %d\n", s.reproved);
+
+    if(percentage_approved(s))
+        printf("More than half of the class has passed!\n");
+    else
+        printf("Less than half of the class passed!\n");
     return 0;
 }

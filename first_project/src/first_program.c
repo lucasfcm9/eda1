@@ -1,12 +1,11 @@
-/*  Alunos: Lucas Fellipe Carvalho Moreira && Pedro Henrique Queiroz Miranda
-    Matrícula: 16/0133394 && 15/0144474
+/*  Aluno: Lucas Fellipe Carvalho Moreira
+    Matrícula: 16/0133394
     Disciplina: Estruturas de dados 1
     Professor: Matheus Mendelson
 */
 
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 10
 #define print(array, length) \
 for(int i = 0; i < length; i++) \
 printf("%.10lf%s", array[i], (i+1 == length ? "\n" : " "));
