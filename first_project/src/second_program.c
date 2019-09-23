@@ -86,5 +86,7 @@ int main()
         printf("More than half of the class has passed!\n");
     else
         printf("Less than half of the class passed!\n");
+    
+    free(NOTES);
     return 0;
 }
