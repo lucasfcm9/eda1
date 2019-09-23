@@ -4,8 +4,8 @@ Disciplina: Estruturas de Dados 1
 Professor: Mateus Mendelson
  */
 
-#ifndef FUNCTION_H
-#define FUNCTION_H
+#ifndef ALL_FUNCTIONS_H
+#define ALL_FUNCTIONS_H
 
 int *readFile(char *path)
 {
@@ -23,7 +23,7 @@ int *readFile(char *path)
 
 	if (matrix == NULL)
 	{
-		printf("Falha na alocação de memória");
+		printf("Error, cannot allocate memory!\n");
 	}
 
 	int number;
@@ -66,7 +66,6 @@ int *binaryMatrix(int *matrix, double avg, int initial_line, int limit_line, int
 		exit(-1);
 	}
 
-	//AS VARIAVEIS I E J ACESSAM A MATRIZ, AS VARIAVEIS K E P A MATRIZ DE BINARIO
 	for (int i = initial_line, k = 0; i <= limit_line; i++, k++)
 	{
 		for (int j = initial_column, p = 0; j <= limit_column; j++, p++)
@@ -101,17 +100,14 @@ int convertBinary(int *binary)
 int getLowestBinary(int binary[9])
 {
 
-	int lowest = 0;			//Variável a ser retornada com o menor número
-	int count = 9;			//Variável para decrementar em cada numero binario para calcular o valor do binario em inteiro
-	int temp = 0;			// variavel temporária que carrega o valor do bit mais a direita do binário
-	int temp_vector[9];		// vetor temporário que carrega o binário resultante após a rotação
-	int take_allInteger[9]; // vetor que carrega o valor inteiro de todos os binários
+	int lowest = 0;
+	int count = 9;
+	int temp = 0;
+	int temp_vector[9];
+	int take_allInteger[9];
 
-	//For que vai calcular os 9 bits inteiros
 	for (int i = 0; i < 9; i++)
 	{
-
-		//FOR para calcular o valor do binário e passar para 1 Inteiro
 		for (int j = 0; j < 9; j++)
 		{
 			count--;
@@ -121,25 +117,19 @@ int getLowestBinary(int binary[9])
 			}
 		}
 
-		// Da um "Refresh" nas variáveis/ passa o valor inteiro para o vetor com todos os inteiros
-		// e variavel temporária pega ultimo valor do vetor binary
 		count = 9;
 		temp = binary[8];
 		take_allInteger[i] = lowest;
 		lowest = 0;
 
-		//loop para alocar os valores do proximo binario (Shift right) dentro do vetor temporário
 		for (int k = 0; k < 9; k++)
 		{
-
-			//IF ELSE para trabalhar com o primeiro e último valor (valor a se substituir pela rotação)
 			if (k == 8)
 			{
 				temp_vector[k] = binary[k - 1];
 			}
 			else
 			{
-				//IF ELSE para pegar o bit anterior do vetor binary e salvar na posição atual do vetor temporário
 				if (k == 0)
 				{
 					temp_vector[0] = temp;
@@ -151,16 +141,14 @@ int getLowestBinary(int binary[9])
 			}
 		}
 
-		//FOR para passa os valores do vetor temporário ao vetor binário inicial
 		for (int p = 0; p < 9; p++)
 		{
 			binary[p] = temp_vector[p];
 		}
 	}
 
-	int testValue = take_allInteger[0]; //Variavel que se inicia pelo primeiro valor do vetos de inteiros
+	int testValue = take_allInteger[0];
 
-	/* LOOP que testa se a variavel test é menor que os outros valores do vetor e se for ela pega esse menor valor*/
 	for (int z = 0; z < 9; z++)
 	{
 
@@ -185,7 +173,7 @@ int *function_random_numbers()
 
 	if (array == NULL)
 	{
-		printf("Falha na alocação de memória!\n");
+		printf("Error, cannot allocate memory!\n");
 		exit(-1);
 	}
 	for (int i = 0; i < 50; i++)
@@ -212,7 +200,7 @@ int *ILBP(int *matrix, int initial_line, int limit_line, int initial_column, int
 
 	if (ILBP == NULL)
 	{
-		printf("Falha na alocação de memória!\n");
+		printf("Error, cannot allocate memory!\n");
 		exit(-1);
 	}
 
@@ -260,7 +248,7 @@ double *features_generator(int *a, int *b, int *c, int *d, int *e, int *f, int *
 
 	if (features == NULL)
 	{
-		printf("Falha na alocação de memória!\n");
+		printf("Error, cannot allocate memory!\n");
 		exit(-1);
 	}
 	for (i = 0; i < 256; i++)
@@ -322,7 +310,7 @@ double *GLCM(int *matrix)
 			array_pixel_above_diag_right == NULL || array_pixel_above_diag_left == NULL || array_pixel_below_diag_left == NULL ||
 			array_pixel_above_diag_right == NULL)
 	{
-		printf("Falha na alocação de memória!\n");
+		printf("Error, cannot allocate memory!\n");
 		exit(-1);
 	}
 
@@ -406,7 +394,7 @@ double *concatenation_vector(int *ILBP_vector, double *GLCM_vector)
 
 	if (concatenation_ILBP_GLCM == NULL)
 	{
-		printf("Falha na alocação de memória!\n");
+		printf("Error, cannot allocate memory!\n");
 		exit(-1);
 	}
 
@@ -453,7 +441,7 @@ double *normalized_sum(double *vector, double *sum_concatenated_vector)
 
 	if (sum_concatenated_vector == NULL)
 	{
-		printf("Falha na alocação de memória!\n");
+		printf("Error, cannot allocate memory!\n");
 		exit(-1);
 	}
 
@@ -610,4 +598,5 @@ int dist_euclidiana(int *random_numbers, double *final_grass, double *final_asph
 
 	return result;
 }
+
 #endif

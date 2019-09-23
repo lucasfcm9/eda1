@@ -9,7 +9,7 @@
 #include <math.h>
 #include <string.h>
 #include <time.h>
-#include "function.h"
+#include "all_functions.h"
 
 int main()
 {
@@ -18,8 +18,8 @@ int main()
 	int *random_numbers = function_random_numbers();
 	double resut;
 	double correct = 0.0;
-	double false_positive = 0.0; //asfalto classificado como grama
-	double false_negative = 0.0; //grama como sendo asfalto
+	double rate_false_positive = 0.0;
+	double rate_false_negative = 0.0;
 	double *final_grass;
 	double *final_asphalt;
 
@@ -34,10 +34,10 @@ int main()
 			correct++;
 			break;
 		case 1:
-			false_positive++;
+			rate_false_positive++;
 			break;
 		case 2:
-			false_negative++;
+			rate_false_negative++;
 			break;
 		}
 
@@ -47,22 +47,21 @@ int main()
 			correct++;
 			break;
 		case 1:
-			false_positive++;
+			rate_false_positive++;
 			break;
 		case 2:
-			false_negative++;
+			rate_false_negative++;
 			break;
 		}
 	}
 
-	correct = (correct / 50) * 100;
-	false_positive = (false_positive / 50) * 100;
-	false_negative = (false_negative / 50) * 100;
+	correct = (correct/50) * 100;
+	rate_false_positive = (rate_false_positive/50) * 100;
+	rate_false_negative = (rate_false_negative/50) * 100;
 
-	//printf("FINAL RESULT\n");
-	printf("Taxa de acerto: %.3lf %%\n", (correct));
-	printf("Taxa de falsa rejeição: %.3lf %%\n", false_negative);
-	printf("Taxa de falsa aceitação: %.3lf %%\n", false_positive);
+	printf("Hit rate: %.3lf %%\n", (correct));
+	printf("False rejection rate: %.3lf %%\n", rate_false_negative);
+	printf("False acceptance rate: %.3lf %%\n", rate_false_positive);
 
 	free(final_grass);
 	free(final_asphalt);
