@@ -4,19 +4,19 @@
 int main () {
 
   PGM original;
-  int rc; //Return code; Vai receber (loag_PGM)
+  int rc;
 
   rc = load_PGM(&original, "lena.pgm");
   if(rc != 0) {
     fprintf(stderr, "Erro ao abrir o arquivo!\n");
-    return -1; //exit(1) - Indica erro;
+    return -1;
   }
 
   negative(&original, &original);
   rc = save_PGM(&original, "copia.pgm");
   if(rc != 0) {
     fprintf(stderr, "Erro ao abrir o arquivo!\n");
-    return -2; //exit(2) - Indica erro;
+    return -2;
   }
 
 

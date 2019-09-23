@@ -6,7 +6,7 @@
 int load_PGM(PGM *pgm, const char *caminho_arquivo) {
 
 		if(pgm == NULL || caminho_arquivo == NULL) {
-			return -1; //Erro
+			return -1;
 	}
 	FILE* f = fopen(caminho_arquivo, "r");
 
@@ -15,22 +15,22 @@ int load_PGM(PGM *pgm, const char *caminho_arquivo) {
 	}
 
 	fgets(pgm -> magic_number, 4, f);
-	pgm -> magic_number[strlen(pgm->magic_number) - 1] = 0; //Substitui o \n por \0;
+	pgm -> magic_number[strlen(pgm->magic_number) - 1] = 0;
 
 	long a, b, c, tamanho;
-	a = ftell(f); //Onde ta o cursor de leitura;
+	a = ftell(f);
 
-	while((c = fgetc(f)) != '\n'); //Move o cursor de leitura até o \n;
+	while((c = fgetc(f)) != '\n');
 	b = ftell(f) + 1;
 
-	tamanho = b - a; //Qtd de caracteres
+	tamanho = b - a;
 
 	pgm -> commentary = (char *) malloc(tamanho + 1);
 
-	fseek(f, a, SEEK_SET); //Vai rebobinar o arquivo; (Cursor do arquivo)
+	fseek(f, a, SEEK_SET);
 
 	fgets(pgm -> commentary, tamanho + 1, f);
-	pgm -> commentary[strlen(pgm -> commentary) - 1] = 0; //Substitui o \n por \0;
+	pgm -> commentary[strlen(pgm -> commentary) - 1] = 0;
 
 	fscanf(f, "%d %d\n", &pgm->w, &pgm->h);
 	fscanf(f, "%d\n", &pgm->max_gray);
